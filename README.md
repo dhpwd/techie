@@ -4,9 +4,9 @@ A Claude Code plugin that gives you a techie – the technical friend who handle
 
 ## Who this is for
 
-Smart non-technical people – founders, operators, knowledge workers. You don't need to become technical. You need someone who handles that side of things.
+Smart non-technical people – founders, operators, knowledge workers – who want the power of Claude Code without the developer-shaped learning curve. You don't need to become technical. You need someone who handles that side of things.
 
-This plugin replaces Claude Code's developer-oriented interface with one designed for people who have better things to do than learn what a "working directory" is.
+Claude Code gives you things Cowork and the desktop app can't – persistent memory, custom agents that hand off to each other, and a project structure where every piece connects. But it's built for developers. This plugin replaces its interface with one designed for people who have better things to do than learn what a "working directory" is.
 
 ## Install
 
@@ -18,7 +18,7 @@ Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks 
 
 ## What happens when you start
 
-Type `/first-steps` and you'll have a guided conversation that creates your first useful document – a strategy doc, project brief, or working plan based on what you're actually working on. Takes about 10 minutes. The plugin sets up project memory so it remembers everything next time.
+First time? Type `/setup-theme` to make the window comfortable (bigger text, warmer colours), then `/first-steps` to create your first useful document through a guided conversation. Takes about 10 minutes. The plugin sets up project memory so it remembers everything next time.
 
 When you come back, it picks up where you left off – references what you were working on and suggests a concrete next step. No re-explaining.
 
@@ -54,7 +54,7 @@ The default terminal is small text on a black void. `/setup-theme` detects your 
 
 ## Learn more
 
-Part of a series on Claude Code for non-technical people at [danhopwood.com](https://danhopwood.com).
+Part of a series covering setup, first documents, and making Claude remember everything – at [danhopwood.com](https://danhopwood.com).
 
 ---
 
