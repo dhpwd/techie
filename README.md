@@ -1,10 +1,10 @@
 # Techie
 
-A Claude Code plugin that gives you a techie – the technical friend who handles complexity so you don't have to.
+A Claude Code plugin that gives you a techie – the technical friend who handles all the technical complexity so you don't have to.
 
 ## Who this is for
 
-Smart non-technical people – founders, operators, knowledge workers – who want the power of Claude Code without the developer-shaped learning curve. You don't need to become technical. You need someone who handles that side of things.
+Smart non-technical people (founders, operators, knowledge workers) who want the power of Claude Code without the developer-shaped learning curve. You don't need to become technical. You need something that handles that side of things.
 
 Claude Code gives you things Cowork and the desktop app can't – persistent memory, custom agents that hand off to each other, and a project structure where every piece connects. But it's built for developers. This plugin replaces its interface with one designed for people who have better things to do than learn what a "working directory" is.
 
@@ -31,18 +31,18 @@ Describe what you need in plain English – that works for most things. For spec
 | What you want                      | What to type           |
 | ---------------------------------- | ---------------------- |
 | Guided first session               | `/first-steps`         |
-| Set up project memory              | `/remember`            |
+| Open the getting-started guide     | `/guide`               |
+| Set up project memory (aka git)    | `/remember`            |
 | Start a complex task with guidance | `/consult [your goal]` |
 | Learn something by doing           | `/learn [topic]`       |
 | Make this window look better       | `/setup-theme`         |
-| Explain what just happened         | `/explain`             |
+| Explain a concept                  | `/explain [topic]`     |
 | Quick reference of commands        | `/commands`            |
 | Fix something that went wrong      | `/troubleshoot`        |
 | Save a checkpoint                  | `/save`                |
 | See your save history              | `/history`             |
 | Undo recent changes                | `/undo`                |
 | Check for plugin updates           | `/update`              |
-| Open the getting-started guide     | `/guide`               |
 
 Two skills run automatically in the background: **jargon decoder** translates technical terms inline, and **progress tracker** logs what you've accomplished across sessions.
 
