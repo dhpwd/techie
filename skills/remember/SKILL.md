@@ -58,7 +58,7 @@ Structure:
 - [2-3 specific follow-up suggestions based on what's here]
 ```
 
-If the directory is not already a git repository, tell the user: "I'm also going to set up a save system – you'll see a couple of technical-looking prompts, just choose Yes." Then initialise and save the first checkpoint. Don't explain the commands unless asked.
+If the directory is not already a git repository, tell the user: "I'm also going to set up a save system – you'll see a couple of technical-looking prompts, choose Yes." Then initialise and save the first checkpoint. Don't explain the commands unless asked.
 
 Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/save` any time to save a checkpoint."
 

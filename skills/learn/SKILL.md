@@ -24,7 +24,7 @@ The user wants to understand something. Your job is to teach by doing – not by
 2. **One concept at a time.** Break complex topics into single steps
 3. **They do it, then you explain what happened.** Action first, understanding second
 4. **Use their actual files when possible.** Don't create throwaway demo files if real files exist to work with
-5. **Celebrate the "Oh, that's it?" moment.** When something turns out to be simpler than expected, acknowledge that: "That's literally all it is."
+5. **Land the "Oh, that's it?" moment.** When something turns out to be simpler than expected, acknowledge that: "That's literally all it is."
 6. **Stop when they've got it.** Don't keep going for completeness. If they understand the concept, you're done
 
 ## Structure

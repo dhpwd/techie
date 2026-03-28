@@ -136,7 +136,7 @@ If they're still uncomfortable: even larger font (18-20 isn't unusual), swap lig
 
 ## Step 7: Configure environment settings
 
-Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – just choose Yes."
+Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – choose Yes."
 
 Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
 

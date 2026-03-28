@@ -75,7 +75,7 @@ Explain: "I've also created a memory file so I'll remember what we're working on
 
 ## Step 6: Initialise save system and save first checkpoint
 
-If the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work. You'll see a few technical-looking prompts – just choose Yes for each one."
+If the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work. You'll see a few technical-looking prompts – choose Yes for each one."
 
 Then initialise (`git init`), stage everything (`git add -A`), and commit with the message "First session – [document name] created". Don't explain what the commands do unless asked – just confirm the outcome:
 

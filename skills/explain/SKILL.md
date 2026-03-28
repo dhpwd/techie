@@ -1,6 +1,6 @@
 ---
 name: explain
-description: Scaffolded explanation from plain English to full technical detail. Use with no arguments to explain the last thing that happened, or specify a topic and optional analogy domain.
+description: Layered explanation – starts plain, goes as deep as you want. Use with no arguments to explain the last thing that happened, or specify a topic and optional analogy domain.
 argument-hint: "[topic] [analogy domain]"
 disable-model-invocation: true
 allowed-tools:

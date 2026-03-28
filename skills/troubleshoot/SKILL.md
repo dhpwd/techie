@@ -55,8 +55,8 @@ Format every diagnosis as:
 
 Then do it. If the fix requires their input or confirmation, ask before proceeding.
 
-## Step 4: Prevent recurrence
+## Step 4: Stop it happening again
 
-If the issue is likely to happen again, mention it briefly: "This can happen when [simple cause]. If you see it again, just run `/troubleshoot` and I'll sort it."
+If the issue is likely to happen again, mention it briefly: "This can happen when [simple cause]. If you see it again, run `/troubleshoot` and I'll sort it."
 
 Don't lecture about best practices. One sentence of prevention, maximum.

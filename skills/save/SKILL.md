@@ -12,7 +12,7 @@ The user wants to save their current work. This is git add + git commit, framed 
 
 ## Steps
 
-1. Check if the directory is a git repository. If not, tell them: "I need to set up a save system first – you'll see a technical-looking prompt, just choose Yes." Then initialise (`git init`). Confirm: "Save system ready."
+1. Check if the directory is a git repository. If not, tell them: "I need to set up a save system first – you'll see a technical-looking prompt, choose Yes." Then initialise (`git init`). Confirm: "Save system ready."
 2. Check what's changed (`git status`). If nothing has changed, say: "Nothing new to save – you're up to date."
 3. Stage all changes (`git add -A`)
 4. Ask: "What were you working on? I'll use that as the label for this checkpoint." Use their answer as the commit message. If they say something vague, write a clear message yourself based on what changed.
