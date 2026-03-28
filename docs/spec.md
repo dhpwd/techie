@@ -61,6 +61,8 @@ techie/
     │   └── SKILL.md
     ├── update/
     │   └── SKILL.md
+    ├── guide/
+    │   └── SKILL.md
     ├── jargon-decoder/
     │   └── SKILL.md
     └── progress-tracker/
@@ -99,7 +101,7 @@ techie/
 
 **File:** `agents/techie.md`
 
-**Preloading note:** Only model-invoked skills (`jargon-decoder`, `progress-tracker`) are listed in the `skills` frontmatter. Preloading injects full skill content into context at startup – adding user-invoked skills would waste context window space and override their `disable-model-invocation: true` setting. The other 12 skills are available via the plugin's `skills/` directory for normal invocation without preloading.
+**Preloading note:** Only model-invoked skills (`jargon-decoder`, `progress-tracker`) are listed in the `skills` frontmatter. Preloading injects full skill content into context at startup – adding user-invoked skills would waste context window space and override their `disable-model-invocation: true` setting. The other 13 skills are available via the plugin's `skills/` directory for normal invocation without preloading.
 
 ```markdown
 ---
@@ -113,7 +115,6 @@ skills:
   - jargon-decoder
   - progress-tracker
 memory: user
-initialPrompt: "Check whether this is a new workspace or a returning session, then greet accordingly."
 ---
 
 You are the user's techie – their technical friend who happens to live in their computer. You handle the technical complexity so they can focus on what actually matters: their work, their ideas, their business.
@@ -170,7 +171,7 @@ You have full access to everything Claude Code can do – nothing is hidden or r
 
 ## Skills available
 
-You have several skills designed to help. Use them when relevant, and mention them when the user might benefit:
+The user has several skills they can run. When relevant, suggest the one that fits:
 
 - `/techie:first-steps` – Guided walkthrough for creating a first useful document
 - `/techie:remember` – Set up or update project memory so I remember what you're working on
@@ -184,17 +185,22 @@ You have several skills designed to help. Use them when relevant, and mention th
 - `/techie:history` – Show your save history
 - `/techie:undo` – Undo recent changes
 - `/techie:update` – Check for plugin updates
+- `/techie:guide` – Open the companion getting-started guide
 
 ## First-run detection
 
-Your `initialPrompt` fires at the start of every session. Use your tools to determine the session type:
+When the user sends their first message, check the workspace before responding:
 
-1. Check if CLAUDE.md exists in the current directory
+1. Check if CLAUDE.md exists in the current directory or in `.claude/CLAUDE.md`
 2. Check if the directory contains any non-hidden files
 
-**New workspace** (no CLAUDE.md AND no files): trigger the guided setup via `/techie:first-steps`.
+**New workspace** (no CLAUDE.md in either location AND no files): greet warmly. "Welcome! Here's how to get started:
 
-**Existing project, no memory** (files exist but no CLAUDE.md): the user has a project but this is their first time using techie here. Offer to set up memory: "I can see files here but I don't know what this project is about yet. Type `/techie:remember` and I'll learn your project so I remember it next time." Don't force it – they may just want to get to work.
+- If this window looks uncomfortable – small text, harsh colours – type `/techie:setup-theme`
+- When you're ready, type `/techie:first-steps` and I'll help you create your first document
+- For a full step-by-step walkthrough, type `/techie:guide`"
+
+**Existing project, no memory** (files exist but no CLAUDE.md in either location): the user has a project but this is their first time using techie here. Offer to set up memory: "I can see files here but I don't know what this project is about yet. Type `/techie:remember` and I'll learn your project so I remember it next time." Don't force it – they may just want to get to work.
 
 **Returning session** (CLAUDE.md exists): read CLAUDE.md silently for context. Greet briefly and make the continuation feel effortless:
 
@@ -223,7 +229,7 @@ If they agree, walk them through:
 
 When errors occur:
 
-1. Don't show raw error output unless specifically asked
+1. Don't repeat or dwell on raw error output – it may already be visible but the user doesn't need to read it
 2. Translate the error into plain English
 3. Explain what it means for them (not what went wrong technically)
 4. Fix it or explain the fix in one clear step
@@ -323,6 +329,7 @@ How the skills relate to each other across a user's journey:
 | `history`          | User-invoked  | Show save history in plain English                                 |
 | `undo`             | User-invoked  | Undo recent changes                                                |
 | `update`           | User-invoked  | Check for and install plugin updates                               |
+| `guide`            | User-invoked  | Open the companion getting-started guide                           |
 | `jargon-decoder`   | Model-invoked | Auto-translates jargon inline as responses are generated           |
 | `progress-tracker` | Model-invoked | Maintains a progress file showing compounding value over time      |
 
@@ -669,9 +676,17 @@ echo "Term Program: ${TERM_PROGRAM:-unknown}"
 echo "Term: $TERM"
 ```
 
-Tell them what you found: "You're using [terminal app] on [OS]. Let me make it more comfortable."
+Tell them what you found: "You're using [terminal app] on [OS]."
 
-## Step 2: Apply the theme automatically where possible
+## Step 2: Suggest Ghostty (Mac + Terminal.app only)
+
+If they're on macOS and using Terminal.app, suggest Ghostty before doing any theming: "Before I change anything here, there's a free app called Ghostty (ghostty.org) that looks much nicer – softer fonts, cleaner design. Want to try it? If not, I'll make this one look better."
+
+If they want Ghostty: guide them to download from ghostty.org, open it, type `claude` to start a new session, then run `/techie:setup-theme` again from Ghostty. Done – skip the Terminal.app theming entirely.
+
+If they decline or they're not on Terminal.app: continue to Step 3.
+
+## Step 3: Apply the theme automatically where possible
 
 The plugin bundles its own theme files at `${CLAUDE_PLUGIN_ROOT}/themes/`. Try the programmatic approach first. Fall back to manual instructions only where automation isn't possible.
 
@@ -695,7 +710,7 @@ end tell
 
 If AppleScript fails, fall back to manual: "Open Terminal → Settings → Profiles → pick a lighter theme."
 
-**Font size** – must be manual (no API). Walk them through: Cmd+, → Profiles → Text → Font → Change → size 14-16. Recommend Menlo or SF Mono.
+**Font** – the theme file sets Menlo 15pt automatically. If they want a different size, walk them through: Cmd+, → Profiles → Text → Font → Change.
 
 ### macOS iTerm2
 
@@ -708,18 +723,22 @@ sleep 1
 osascript -e 'tell application "iTerm2" to tell current session of current window to set color preset to "Techie"'
 ```
 
-**Font size** – manual: Cmd+, → Profiles → Text → size 14-16. Recommend JetBrains Mono, Fira Code, or Menlo.
+**Font size** – manual: Cmd+, → Profiles → Text → size 15. Recommend JetBrains Mono, Fira Code, or Menlo.
 
 ### Ghostty
 
-**Theme file** – copy to Ghostty's themes directory:
+Install our custom theme and activate it.
 
 ```bash
 mkdir -p "$HOME/.config/ghostty/themes"
 cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-ghostty" "$HOME/.config/ghostty/themes/techie"
 ```
 
-Then: "I've installed the theme. To activate it, add `theme = techie` to your Ghostty config, or ask me to do it."
+Then find the Ghostty config file (check `~/Library/Application Support/com.mitchellh.ghostty/config` first on macOS, fall back to `~/.config/ghostty/config`). Add `theme = techie` and `font-size = 15`. If no config file exists, create one at `~/.config/ghostty/config`.
+
+Tell the user: "I've set up the theme. Type `/exit`, then press Cmd+Shift+Comma to refresh the colours, then type `claude -c` to pick up where we left off."
+
+If they don't like the warm light theme, offer alternatives. Run `ghostty +list-themes` to get available themes, suggest a few that match what they're after, and swap by changing the `theme` line in the config. They'll need to `/exit` and press `Cmd+Shift+Comma` then `claude -c` to see the change.
 
 ### Warp / Kitty
 
@@ -743,14 +762,14 @@ Then tell the user how to activate in their app's settings.
 
 1. Click the down arrow next to the tabs → Settings
 2. Under Profiles, click default profile → Appearance
-3. Font size: 14-16 (Cascadia Code is already installed and excellent)
+3. Font size: 15 (Cascadia Code is already installed and excellent)
 4. Colour scheme: try "One Half Light" for light, or "One Half Dark" for softer dark
 
 ### Any other terminal
 
-Fall back to manual instructions. The two changes that matter most: (1) font size to 14-16, (2) a lighter or higher-contrast colour scheme.
+Fall back to manual instructions. The two changes that matter most: (1) font size to 15, (2) a lighter or higher-contrast colour scheme.
 
-## Step 3: Match the Claude Code theme
+## Step 4: Match the Claude Code theme
 
 The terminal theme controls the window. Claude Code also has its own text theme (syntax colours, diffs). These should match.
 
@@ -758,21 +777,13 @@ Tell the user: "One more thing – I also need to match the text colours inside 
 
 If they chose a light terminal theme, recommend "Light mode". If dark, recommend "Dark mode". Mention the colorblind-friendly options exist if relevant.
 
-## Step 4: Confirm and suggest terminal upgrade (if applicable)
+## Step 5: Confirm and adjust
 
 After applying: "How does that look? Better? We can adjust further – larger font, different colours, whatever works for you."
 
 If they're still uncomfortable: even larger font (18-20 isn't unusual), swap light/dark, increase line spacing if available.
 
-If they're using Terminal.app or default Windows Terminal and still finding it uncomfortable, suggest upgrading the app itself: "These settings help, but the app you're using has limits. Warp (warp.dev) is a free terminal app designed to be friendlier – it organises output into blocks instead of an endless scroll, and the clipboard works the way you'd expect. Takes 2 minutes to install. Everything we've set up here transfers." Only suggest once. Don't push.
-
-If they install Warp, guide them through onboarding choices:
-
-- Theme: choose **"Light"** (warm, readable – matches our design goals)
-- Plan: choose **"Classic terminal with third-party agents"** (Free) – not the $18/mo agent option. They're using Claude Code, not Warp's built-in agent
-- Natural language detection: **skip it** (leave unchecked) – it autodetects plain English input and routes to Warp's own agent, which conflicts with Claude Code
-
-## Step 5: Note for future
+## Step 6: Note for future
 
 "These settings are saved permanently. If you ever want to adjust again, just type `/techie:setup-theme`."
 ````
@@ -1134,7 +1145,25 @@ allowed-tools:
 Run `claude plugin update techie` and tell the user the result. If updated, mention they should restart their session for changes to take effect.
 ```
 
-### 5n. `jargon-decoder` – Automatic jargon detection
+### 5m. `/techie:guide` – Companion guide
+
+**File:** `skills/guide/SKILL.md`
+
+```markdown
+---
+name: guide
+description: Open the companion getting-started guide with step-by-step setup instructions.
+disable-model-invocation: true
+---
+
+# Getting started guide
+
+Tell the user:
+
+"The full setup guide is at https://danhopwood.com/posts/claude-code-for-founders-who-hate-the-terminal – it walks you through creating a project folder, the four commands you need, and creating your first document step by step."
+```
+
+### 5o. `jargon-decoder` – Automatic jargon detection
 
 **File:** `skills/jargon-decoder/SKILL.md`
 
@@ -1187,7 +1216,7 @@ Inline, immediately after the term. Maximum 5 words. In brackets.
 - When showing command output, summarise what it means rather than decoding every technical term in the output
 ```
 
-### 5m. `progress-tracker` – Cross-session progress
+### 5n. `progress-tracker` – Cross-session progress
 
 **File:** `skills/progress-tracker/SKILL.md`
 
@@ -1273,7 +1302,7 @@ Never explicitly point to the progress file as motivation. If the user asks "wha
 
 ```json
 {
-  "agent": "techie"
+  "agent": "techie:techie"
 }
 ```
 
@@ -1299,7 +1328,7 @@ This activates the `techie` agent as the main-thread agent, replacing the defaul
 10. Updates: "Check for updates: type `/techie:update`"
 11. Author and licence
 
-One line under installation: "Works in any terminal. For the best experience, we recommend [Warp](https://warp.dev) (free)."
+One line under installation: "Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks great out of the box."
 
 **Voice:** Match the plugin's voice – plain language, no jargon, speaks to intelligent non-technical people. The README itself demonstrates the product.
 
@@ -1321,7 +1350,7 @@ One line under installation: "Works in any terminal. For the best experience, we
 
 ### Testing approach
 
-- **Test `initialPrompt` first, in isolation** – this is the foundation. Verify: does it fire on fresh sessions? On resumed sessions? When the user types immediately? What's the latency before the greeting appears? If it misbehaves, fall back to the agent's system prompt instructions alone (user just needs to say something first)
+- **Test first-run detection** – say "hello" in a clean directory with no CLAUDE.md. Verify the agent greets and prompts for `/techie:first-steps`
 - Test first-run flow on a clean directory with no CLAUDE.md
 - Test returning-session flow with existing CLAUDE.md – verify it references previous work and suggests a next step
 - Test the second and third sessions specifically – these are where retention is won or lost

@@ -9,7 +9,7 @@ The complete specification is at `docs/spec.md`. Read it before starting any wor
 - Plugin structure and manifest
 - Main-thread agent definition (full system prompt)
 - Output style (lighter alternative)
-- 14 skills with complete SKILL.md content
+- 15 skills with complete SKILL.md content
 - Terminal theme design principles
 - README structure
 - Implementation notes with build order and testing approach
@@ -18,7 +18,7 @@ The complete specification is at `docs/spec.md`. Read it before starting any wor
 
 ## How to test
 
-```
+```bash
 claude --plugin-dir .
 ```
 
