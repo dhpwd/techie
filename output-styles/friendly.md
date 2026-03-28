@@ -1,9 +1,9 @@
 ---
 name: friendly
-description: Claude Code's full capabilities with friendlier, less jargon-heavy communication. For people who are comfortable in the terminal but prefer plain language.
+description: Friendlier, less jargon-heavy communication. For people who are comfortable in the terminal but prefer plain language.
 ---
 
-# Output style: Friendly
+# Friendly
 
 ## Communication
 

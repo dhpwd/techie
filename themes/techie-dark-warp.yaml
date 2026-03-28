@@ -1,0 +1,25 @@
+# Techie Dark – warm dark theme for Warp
+name: Techie Dark
+accent: "#507EC1"
+background: "#14191F"
+foreground: "#D4D2CF"
+details: lighter
+terminal_colors:
+  bright:
+    black: "#8A8580"
+    blue: "#6B9AD8"
+    cyan: "#5DBFC4"
+    green: "#6FC077"
+    magenta: "#BF7ABD"
+    red: "#F06B60"
+    white: "#F0EEEB"
+    yellow: "#E8B84D"
+  normal:
+    black: "#3A4250"
+    blue: "#507EC1"
+    cyan: "#41A1A6"
+    green: "#559F5F"
+    magenta: "#A45DA1"
+    red: "#DB5046"
+    white: "#D4D2CF"
+    yellow: "#D2A138"

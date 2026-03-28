@@ -31,24 +31,33 @@ If they want Ghostty: guide them to download from ghostty.org, open it, type `cl
 
 If they decline or they're not on Terminal.app: continue to Step 3.
 
-## Step 3: Apply the theme automatically where possible
+## Step 3: Ask light or dark
 
-The plugin bundles its own theme files at `${CLAUDE_PLUGIN_ROOT}/themes/`. Try the programmatic approach first. Fall back to manual instructions only where automation isn't possible.
+"Do you prefer a light background (easier on the eyes in daylight) or dark?" Default to light if they're unsure.
+
+The plugin bundles light and dark variants. Use the light files by default (`techie-light.*`) or the dark files if they prefer (`techie-dark.*`). Substitute the correct file names AND profile names in the steps below – e.g. "Techie Light" or "Techie Dark" in the AppleScript, and the corresponding file paths.
+
+## Step 4: Apply the theme automatically where possible
+
+Try the programmatic approach first. Fall back to manual instructions only where automation isn't possible.
 
 ### macOS Terminal.app
 
-**Colour scheme** – import and apply via AppleScript (changes the current window live):
+**Colour scheme** – import the profile and apply it without opening a new window:
 
 ```bash
-cp "${CLAUDE_PLUGIN_ROOT}/themes/techie.terminal" "/tmp/techie.terminal"
-open "/tmp/techie.terminal"
+cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light.terminal" "/tmp/techie-light.terminal"
+open "/tmp/techie-light.terminal"
 sleep 2
 osascript -e '
 tell application "Terminal"
-  if (count of windows) > 1 then close front window
-  set targetProfile to settings set "Techie"
-  set current settings of front window to targetProfile
+  set profileName to "Techie Light"
+  set targetProfile to settings set profileName
+  -- apply to the original window (last, since import opened a new one in front)
+  set current settings of last window to targetProfile
   set default settings to targetProfile
+  -- close the import window (front)
+  close front window
 end tell
 '
 ```
@@ -62,8 +71,8 @@ If AppleScript fails, fall back to manual: "Open Terminal → Settings → Profi
 **Colour scheme** – import and apply via AppleScript:
 
 ```bash
-cp "${CLAUDE_PLUGIN_ROOT}/themes/techie.itermcolors" "/tmp/techie.itermcolors"
-open "/tmp/techie.itermcolors"
+cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light.itermcolors" "/tmp/techie-light.itermcolors"
+open "/tmp/techie-light.itermcolors"
 sleep 1
 osascript -e 'tell application "iTerm2" to tell current session of current window to set color preset to "Techie"'
 ```
@@ -76,7 +85,7 @@ Install our custom theme and activate it.
 
 ```bash
 mkdir -p "$HOME/.config/ghostty/themes"
-cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-ghostty" "$HOME/.config/ghostty/themes/techie"
+cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light-ghostty" "$HOME/.config/ghostty/themes/techie"
 ```
 
 Then find the Ghostty config file (check `~/Library/Application Support/com.mitchellh.ghostty/config` first on macOS, fall back to `~/.config/ghostty/config`). Add `theme = techie` and `font-size = 15`. If no config file exists, create one at `~/.config/ghostty/config`.
@@ -92,11 +101,11 @@ Copy theme files to the standard locations:
 ```bash
 # Warp
 mkdir -p "$HOME/.warp/themes"
-cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-warp.yaml" "$HOME/.warp/themes/techie.yaml"
+cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light-warp.yaml" "$HOME/.warp/themes/techie.yaml"
 
 # Kitty
 mkdir -p "$HOME/.config/kitty/themes"
-cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-kitty.conf" "$HOME/.config/kitty/themes/techie.conf"
+cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light-kitty.conf" "$HOME/.config/kitty/themes/techie.conf"
 ```
 
 Then tell the user how to activate in their app's settings.
@@ -114,7 +123,7 @@ Then tell the user how to activate in their app's settings.
 
 Fall back to manual instructions. The two changes that matter most: (1) font size to 15, (2) a lighter or higher-contrast colour scheme.
 
-## Step 4: Match the Claude Code theme
+## Step 5: Match the Claude Code theme
 
 The terminal theme controls the window. Claude Code also has its own text theme (syntax colours, diffs). These should match.
 
@@ -122,12 +131,12 @@ Tell the user: "One more thing – I also need to match the text colours inside 
 
 If they chose a light terminal theme, recommend "Light mode". If dark, recommend "Dark mode". Mention the colorblind-friendly options exist if relevant.
 
-## Step 5: Confirm and adjust
+## Step 6: Confirm and adjust
 
 After applying: "How does that look? Better? We can adjust further – larger font, different colours, whatever works for you."
 
 If they're still uncomfortable: even larger font (18-20 isn't unusual), swap light/dark, increase line spacing if available.
 
-## Step 6: Note for future
+## Step 7: Note for future
 
 "These settings are saved permanently. If you ever want to adjust again, just type `/techie:setup-theme`."
