@@ -1,0 +1,25 @@
+# Techie Light – warm parchment theme for Warp
+name: Techie
+accent: "#3A69AE"
+background: "#FAF8F5"
+foreground: "#2D2A24"
+details: darker
+terminal_colors:
+  bright:
+    black: "#756E69"
+    blue: "#507EC1"
+    cyan: "#41A1A6"
+    green: "#559F5F"
+    magenta: "#A45DA1"
+    red: "#DB5046"
+    white: "#FAF8F5"
+    yellow: "#D2A138"
+  normal:
+    black: "#2D2A24"
+    blue: "#3A69AE"
+    cyan: "#2E8B90"
+    green: "#428754"
+    magenta: "#8E488B"
+    red: "#C33C33"
+    white: "#EAE4DC"
+    yellow: "#BE8B28"

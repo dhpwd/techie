@@ -1,0 +1,28 @@
+# Techie Light – warm parchment theme for Ghostty
+
+background = #FAF8F5
+foreground = #2D2A24
+cursor-color = #755239
+cursor-text = #FAF8F5
+selection-background = #EAE4DC
+selection-foreground = #2D2A24
+
+# Normal colours
+palette = 0=#2D2A24
+palette = 1=#C33C33
+palette = 2=#428754
+palette = 3=#BE8B28
+palette = 4=#3A69AE
+palette = 5=#8E488B
+palette = 6=#2E8B90
+palette = 7=#EAE4DC
+
+# Bright colours
+palette = 8=#756E69
+palette = 9=#DB5046
+palette = 10=#559F5F
+palette = 11=#D2A138
+palette = 12=#507EC1
+palette = 13=#A45DA1
+palette = 14=#41A1A6
+palette = 15=#FAF8F5

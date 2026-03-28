@@ -1,0 +1,17 @@
+{
+  "name": "techie",
+  "description": "Transforms Claude Code into an accessible assistant for smart non-technical people. Claude becomes your techie – the technical friend who handles complexity so you don't have to.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Dan Hopwood",
+    "url": "https://danhopwood.com"
+  },
+  "repository": "https://github.com/dhpwd/techie",
+  "license": "MIT",
+  "keywords": [
+    "accessibility",
+    "non-technical",
+    "beginner-friendly",
+    "knowledge-work"
+  ]
+}
