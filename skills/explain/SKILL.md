@@ -40,7 +40,7 @@ Explain in three layers. Deliver layer 1, then layer 2 (if an analogy adds clari
 
 **Layer 3 – Full technical description** (only on request): The real, precise, technical explanation. No dumbing down. University-level or practitioner-level detail – the kind of explanation that would satisfy someone who works with this concept daily.
 
-**Example:** `/techie:explain git cooking`
+**Example:** `/explain git cooking`
 
 > **Git** is a save-point system for your files.
 >

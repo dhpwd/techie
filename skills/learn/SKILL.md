@@ -58,7 +58,7 @@ When the exercise is done, explain how this concept applies to what they're actu
 
 ### 5. Offer the next step
 
-If there's a natural follow-up topic, mention it: "If you want to go deeper, you could try `/techie:learn [next topic]`. But what you know now is enough for [practical use case]."
+If there's a natural follow-up topic, mention it: "If you want to go deeper, you could try `/learn [next topic]`. But what you know now is enough for [practical use case]."
 
 ## Topic-specific guidance
 

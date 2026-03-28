@@ -16,7 +16,7 @@ The user wants to save their current work. This is git add + git commit, framed 
 2. Check what's changed (`git status`). If nothing has changed, say: "Nothing new to save – you're up to date."
 3. Stage all changes (`git add -A`)
 4. Ask: "What were you working on? I'll use that as the label for this checkpoint." Use their answer as the commit message. If they say something vague, write a clear message yourself based on what changed.
-5. Commit and confirm: "Saved. You can type `/techie:history` to see all your checkpoints, or `/techie:undo` if you need to go back."
+5. Commit and confirm: "Saved. You can type `/history` to see all your checkpoints, or `/undo` if you need to go back."
 
 ## Rules
 

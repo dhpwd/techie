@@ -13,13 +13,13 @@ The user wants to go back to a previous state. Handle with care – explain what
 
 ## If they want to undo unsaved changes
 
-"I can undo everything since your last checkpoint. This will put your files back to how they were when you last ran `/techie:save`. Want me to go ahead?"
+"I can undo everything since your last checkpoint. This will put your files back to how they were when you last ran `/save`. Want me to go ahead?"
 
 If confirmed: `git checkout -- .` and confirm: "Done. Your files are back to your last checkpoint."
 
 ## If they want to go back to a specific checkpoint
 
-1. Show their recent history (same as `/techie:history`)
+1. Show their recent history (same as `/history`)
 2. Ask which checkpoint they want to go back to
 3. Explain what will happen: "This will undo everything after [checkpoint label]. Your files will look exactly like they did at that point."
 4. If confirmed, create a new commit that reverts to that state (don't use `git reset --hard` – too destructive for beginners. Use `git revert` or check out the files and create a new checkpoint)

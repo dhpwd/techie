@@ -57,6 +57,6 @@ Then do it. If the fix requires their input or confirmation, ask before proceedi
 
 ## Step 4: Prevent recurrence
 
-If the issue is likely to happen again, mention it briefly: "This can happen when [simple cause]. If you see it again, just run `/techie:troubleshoot` and I'll sort it."
+If the issue is likely to happen again, mention it briefly: "This can happen when [simple cause]. If you see it again, just run `/troubleshoot` and I'll sort it."
 
 Don't lecture about best practices. One sentence of prevention, maximum.

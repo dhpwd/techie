@@ -45,8 +45,8 @@ Create it if it doesn't exist. Structure:
 Update the progress file at the end of each session, or after significant milestones within a session:
 
 - A document was created or significantly edited
-- A new concept was explored via `/techie:learn`
-- A problem was solved via `/techie:troubleshoot`
+- A new concept was explored via `/learn`
+- A problem was solved via `/troubleshoot`
 - A new skill or workflow was used for the first time
 - A folder structure was set up or reorganised
 

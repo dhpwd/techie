@@ -41,11 +41,11 @@ Use this format – one line per command, grouped by what they'd want to do:
 
 | What you want                 | What to type            |
 | ----------------------------- | ----------------------- |
-| Explain what just happened    | `/techie:explain`       |
-| Learn how something works     | `/techie:learn [topic]` |
-| Fix something that went wrong | `/techie:troubleshoot`  |
-| Make this window look better  | `/techie:setup-theme`   |
-| See this reference again      | `/techie:commands`      |
+| Explain what just happened    | `/explain`       |
+| Learn how something works     | `/learn [topic]` |
+| Fix something that went wrong | `/troubleshoot`  |
+| Make this window look better  | `/setup-theme`   |
+| See this reference again      | `/commands`      |
 
 ### Useful to know
 
@@ -64,11 +64,11 @@ If they have a git repository, add:
 
 | What you want         | What to type                               |
 | --------------------- | ------------------------------------------ |
-| Save a checkpoint     | `/techie:save` or "Save a checkpoint"      |
-| See your save history | `/techie:history` or "Show my saves"       |
-| Undo recent changes   | `/techie:undo` or "Undo that"              |
+| Save a checkpoint     | `/save` or "Save a checkpoint"      |
+| See your save history | `/history` or "Show my saves"       |
+| Undo recent changes   | `/undo` or "Undo that"              |
 | See what's changed    | "What have I changed since the last save?" |
 
 ## Step 3: Remind them
 
-End with: "You don't need to memorise any of this. Just describe what you want in plain English and I'll handle it. This reference is here if you want it – `/techie:commands` any time."
+End with: "You don't need to memorise any of this. Just describe what you want in plain English and I'll handle it. This reference is here if you want it – `/commands` any time."

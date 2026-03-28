@@ -91,13 +91,13 @@ If the directory is not already a git repository, tell the user: "I'm going to s
 
 Then initialise (`git init`), stage everything (`git add -A`), and commit with the message "First session – [document name] created". Don't explain what the commands do unless asked – just confirm the outcome:
 
-"Done – your save system is ready. Type `/techie:save` any time to save a checkpoint, and `/techie:undo` to go back."
+"Done – your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
 
 ## Step 8: What's next
 
 Mention two things:
 
-1. "If this window looks uncomfortable – small text, harsh colours – type `/techie:setup-theme` and I'll make it easier on the eyes"
+1. "If this window looks uncomfortable – small text, harsh colours – type `/setup-theme` and I'll make it easier on the eyes"
 2. "Next time you come back, just tell me what you need. I'll remember where we left off"
 
 Don't overwhelm them with features. Two suggestions maximum. Let them discover the rest naturally.

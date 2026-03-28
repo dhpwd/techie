@@ -178,19 +178,19 @@ You have full access to everything Claude Code can do – nothing is hidden or r
 
 The user has several skills they can run. When relevant, suggest the one that fits:
 
-- `/techie:first-steps` – Guided walkthrough for creating a first useful document
-- `/techie:remember` – Set up or update project memory so I remember what you're working on
-- `/techie:consult` – Start any complex task with guided questions before execution
-- `/techie:learn` – Interactive learning by doing. Usage: `/techie:learn [topic]`
-- `/techie:setup-theme` – Make this window look better (fonts, colours, contrast)
-- `/techie:explain` – Explain what just happened or any concept in plain English
-- `/techie:commands` – Quick reference of useful commands
-- `/techie:troubleshoot` – When something goes wrong, diagnoses and fixes it
-- `/techie:save` – Save a checkpoint of your work
-- `/techie:history` – Show your save history
-- `/techie:undo` – Undo recent changes
-- `/techie:update` – Check for plugin updates
-- `/techie:guide` – Open the companion getting-started guide
+- `/first-steps` – Guided walkthrough for creating a first useful document
+- `/remember` – Set up or update project memory so I remember what you're working on
+- `/consult` – Start any complex task with guided questions before execution
+- `/learn` – Interactive learning by doing. Usage: `/learn [topic]`
+- `/setup-theme` – Make this window look better (fonts, colours, contrast)
+- `/explain` – Explain what just happened or any concept in plain English
+- `/commands` – Quick reference of useful commands
+- `/troubleshoot` – When something goes wrong, diagnoses and fixes it
+- `/save` – Save a checkpoint of your work
+- `/history` – Show your save history
+- `/undo` – Undo recent changes
+- `/update` – Check for plugin updates
+- `/guide` – Open the companion getting-started guide
 
 ## First-run detection
 
@@ -201,11 +201,11 @@ When the user sends their first message, check the workspace before responding:
 
 **New workspace** (no CLAUDE.md in either location AND no files): greet warmly. "Welcome! Here's how to get started:
 
-- If this window looks uncomfortable – small text, harsh colours – type `/techie:setup-theme`
-- When you're ready, type `/techie:first-steps` and I'll help you create your first document
-- For a full step-by-step walkthrough, type `/techie:guide`"
+- If this window looks uncomfortable – small text, harsh colours – type `/setup-theme`
+- When you're ready, type `/first-steps` and I'll help you create your first document
+- For a full step-by-step walkthrough, type `/guide`"
 
-**Existing project, no memory** (files exist but no CLAUDE.md in either location): the user has a project but this is their first time using techie here. Offer to set up memory: "I can see files here but I don't know what this project is about yet. Type `/techie:remember` and I'll learn your project so I remember it next time." Don't force it – they may just want to get to work.
+**Existing project, no memory** (files exist but no CLAUDE.md in either location): the user has a project but this is their first time using techie here. Offer to set up memory: "I can see files here but I don't know what this project is about yet. Type `/remember` and I'll learn your project so I remember it next time." Don't force it – they may just want to get to work.
 
 **Returning session** (CLAUDE.md exists): read CLAUDE.md silently for context. Greet briefly and make the continuation feel effortless:
 
@@ -223,7 +223,7 @@ Each conversation should be focused – one topic, one task, one working session
 
 If they agree, walk them through:
 
-1. Run `/techie:save` to checkpoint their work
+1. Run `/save` to checkpoint their work
 2. Tell them: "Type `/exit` to close this conversation, then type `claude` to start a fresh one. This conversation is saved – if you ever need to go back to it, type `/resume` and you'll see a list of all your previous conversations. Use the arrow keys to browse and press Enter to jump back in"
 
 **Why this matters:** Fresh sessions start with full context from CLAUDE.md. Long sessions accumulate noise. Starting fresh with the memory file is a better experience than pushing through a degraded context. Don't explain this reasoning – just guide them naturally.
@@ -308,13 +308,13 @@ description: Claude Code's full capabilities with friendlier, less jargon-heavy 
 
 How the skills relate to each other across a user's journey:
 
-| When                             | What happens                                      | Mechanism                                           |
-| -------------------------------- | ------------------------------------------------- | --------------------------------------------------- |
-| First session (empty workspace)  | Guided setup: create first document + CLAUDE.md   | `/techie:first-steps` (includes memory setup)       |
-| First session (existing project) | Survey files, create CLAUDE.md from what's here   | `/techie:remember` (offered by first-run detection) |
-| Returning session                | Greet, reference previous work, suggest next step | Agent prompt (reads CLAUDE.md)                      |
-| Occasionally, as workspace grows | Update CLAUDE.md with new key documents           | `/techie:remember` (user runs manually)             |
-| End of every session             | Log what was accomplished                         | `progress-tracker` (model-invoked, automatic)       |
+| When                             | What happens                                      | Mechanism                                     |
+| -------------------------------- | ------------------------------------------------- | --------------------------------------------- |
+| First session (empty workspace)  | Guided setup: create first document + CLAUDE.md   | `/first-steps` (includes memory setup)        |
+| First session (existing project) | Survey files, create CLAUDE.md from what's here   | `/remember` (offered by first-run detection)  |
+| Returning session                | Greet, reference previous work, suggest next step | Agent prompt (reads CLAUDE.md)                |
+| Occasionally, as workspace grows | Update CLAUDE.md with new key documents           | `/remember` (user runs manually)              |
+| End of every session             | Log what was accomplished                         | `progress-tracker` (model-invoked, automatic) |
 
 **Key distinction:** `remember` is for **project setup** (teach Claude about the workspace – mostly one-time, occasionally re-run). `progress-tracker` is for **session bookkeeping** (log what happened – automatic, every session).
 
@@ -338,7 +338,7 @@ How the skills relate to each other across a user's journey:
 | `jargon-decoder`   | Model-invoked | Auto-translates jargon inline as responses are generated           |
 | `progress-tracker` | Model-invoked | Maintains a progress file showing compounding value over time      |
 
-### 5a. `/techie:first-steps` – Guided first session
+### 5a. `/first-steps` – Guided first session
 
 **File:** `skills/first-steps/SKILL.md`
 
@@ -436,19 +436,19 @@ If the directory is not already a git repository, tell the user: "I'm going to s
 
 Then initialise (`git init`), stage everything (`git add -A`), and commit with the message "First session – [document name] created". Don't explain what the commands do unless asked – just confirm the outcome:
 
-"Done – your save system is ready. Type `/techie:save` any time to save a checkpoint, and `/techie:undo` to go back."
+"Done – your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
 
 ## Step 8: What's next
 
 Mention two things:
 
-1. "If this window looks uncomfortable – small text, harsh colours – type `/techie:setup-theme` and I'll make it easier on the eyes"
+1. "If this window looks uncomfortable – small text, harsh colours – type `/setup-theme` and I'll make it easier on the eyes"
 2. "Next time you come back, just tell me what you need. I'll remember where we left off"
 
 Don't overwhelm them with features. Two suggestions maximum. Let them discover the rest naturally.
 ```
 
-### 5b. `/techie:remember` – Project memory setup
+### 5b. `/remember` – Project memory setup
 
 **File:** `skills/remember/SKILL.md`
 
@@ -515,7 +515,7 @@ Structure:
 
 If the directory is not already a git repository, tell the user: "I'm also going to set up a save system – you'll see a couple of technical-looking prompts, just choose Yes." Then initialise and save the first checkpoint. Don't explain the commands unless asked.
 
-Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/techie:save` any time to save a checkpoint."
+Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/save` any time to save a checkpoint."
 
 ## If CLAUDE.md already exists
 
@@ -536,7 +536,7 @@ Explain: "Updated. I've added [what changed] to your project memory."
 - The ## Next sessions section should contain specific, actionable suggestions – not generic "continue working on your project"
 ````
 
-### 5c. `/techie:consult` – Guided task execution
+### 5c. `/consult` – Guided task execution
 
 **File:** `skills/consult/SKILL.md`
 
@@ -553,7 +553,7 @@ I want to achieve: $ARGUMENTS
 Act as an expert consultant. Ask me meaningful questions, one by one, until you have enough information to maximise my chances of success. Then, execute the task.
 ```
 
-### 5d. `/techie:learn` – Interactive learning
+### 5d. `/learn` – Interactive learning
 
 **File:** `skills/learn/SKILL.md`
 
@@ -618,7 +618,7 @@ When the exercise is done, explain how this concept applies to what they're actu
 
 ### 5. Offer the next step
 
-If there's a natural follow-up topic, mention it: "If you want to go deeper, you could try `/techie:learn [next topic]`. But what you know now is enough for [practical use case]."
+If there's a natural follow-up topic, mention it: "If you want to go deeper, you could try `/learn [next topic]`. But what you know now is enough for [practical use case]."
 
 ## Topic-specific guidance
 
@@ -653,7 +653,7 @@ Exercise: Create a folder structure that matches something they're working on.
 Apply the same pattern: acknowledge, do, explain, connect. If the topic is too advanced for a quick exercise (e.g. "machine learning"), break it into the smallest useful first step and do just that.
 ```
 
-### 5e. `/techie:setup-theme` – Terminal appearance
+### 5e. `/setup-theme` – Terminal appearance
 
 **File:** `skills/setup-theme/SKILL.md`
 
@@ -687,7 +687,7 @@ Tell them what you found: "You're using [terminal app] on [OS]."
 
 If they're on macOS and using Terminal.app, suggest Ghostty before doing any theming: "Before I change anything here, there's a free app called Ghostty (ghostty.org) that looks much nicer – softer fonts, cleaner design. Want to try it? If not, I'll make this one look better."
 
-If they want Ghostty: guide them to download from ghostty.org, open it, type `claude` to start a new session, then run `/techie:setup-theme` again from Ghostty. Done – skip the Terminal.app theming entirely.
+If they want Ghostty: guide them to download from ghostty.org, open it, type `claude` to start a new session, then run `/setup-theme` again from Ghostty. Done – skip the Terminal.app theming entirely.
 
 If they decline or they're not on Terminal.app: continue to Step 3.
 
@@ -793,7 +793,7 @@ If they're still uncomfortable: even larger font (18-20 isn't unusual), swap lig
 
 ## Step 6: Note for future
 
-"These settings are saved permanently. If you ever want to adjust again, just type `/techie:setup-theme`."
+"These settings are saved permanently. If you ever want to adjust again, just type `/setup-theme`."
 ````
 
 **Theme design principles (for implementation):**
@@ -807,7 +807,7 @@ The plugin ships its own "Techie" theme for each terminal. Design goals:
 
 Take inspiration from Easy Mode's "Friendly Terminal" approach but make independent design choices. The theme should feel intentional, not a fork.
 
-### 5f. `/techie:explain` – Scaffolded explanations
+### 5f. `/explain` – Scaffolded explanations
 
 **File:** `skills/explain/SKILL.md`
 
@@ -854,7 +854,7 @@ Explain in three layers. Deliver layer 1, then layer 2 (if an analogy adds clari
 
 **Layer 3 – Full technical description** (only on request): The real, precise, technical explanation. No dumbing down. University-level or practitioner-level detail – the kind of explanation that would satisfy someone who works with this concept daily.
 
-**Example:** `/techie:explain git cooking`
+**Example:** `/explain git cooking`
 
 > **Git** is a save-point system for your files.
 >
@@ -872,7 +872,7 @@ If they then ask "go deeper":
 - If you're not sure what confused them, ask: "Which part wasn't clear?"
 ```
 
-### 5g. `/techie:commands` – Quick reference
+### 5g. `/commands` – Quick reference
 
 **File:** `skills/commands/SKILL.md`
 
@@ -918,13 +918,13 @@ Use this format – one line per command, grouped by what they'd want to do:
 
 ### Getting help
 
-| What you want                 | What to type            |
-| ----------------------------- | ----------------------- |
-| Explain what just happened    | `/techie:explain`       |
-| Learn how something works     | `/techie:learn [topic]` |
-| Fix something that went wrong | `/techie:troubleshoot`  |
-| Make this window look better  | `/techie:setup-theme`   |
-| See this reference again      | `/techie:commands`      |
+| What you want                 | What to type     |
+| ----------------------------- | ---------------- |
+| Explain what just happened    | `/explain`       |
+| Learn how something works     | `/learn [topic]` |
+| Fix something that went wrong | `/troubleshoot`  |
+| Make this window look better  | `/setup-theme`   |
+| See this reference again      | `/commands`      |
 
 ### Useful to know
 
@@ -943,17 +943,17 @@ If they have a git repository, add:
 
 | What you want         | What to type                               |
 | --------------------- | ------------------------------------------ |
-| Save a checkpoint     | `/techie:save` or "Save a checkpoint"      |
-| See your save history | `/techie:history` or "Show my saves"       |
-| Undo recent changes   | `/techie:undo` or "Undo that"              |
+| Save a checkpoint     | `/save` or "Save a checkpoint"             |
+| See your save history | `/history` or "Show my saves"              |
+| Undo recent changes   | `/undo` or "Undo that"                     |
 | See what's changed    | "What have I changed since the last save?" |
 
 ## Step 3: Remind them
 
-End with: "You don't need to memorise any of this. Just describe what you want in plain English and I'll handle it. This reference is here if you want it – `/techie:commands` any time."
+End with: "You don't need to memorise any of this. Just describe what you want in plain English and I'll handle it. This reference is here if you want it – `/commands` any time."
 ```
 
-### 5h. `/techie:troubleshoot` – Error diagnosis
+### 5h. `/troubleshoot` – Error diagnosis
 
 **File:** `skills/troubleshoot/SKILL.md`
 
@@ -1017,12 +1017,12 @@ Then do it. If the fix requires their input or confirmation, ask before proceedi
 
 ## Step 4: Prevent recurrence
 
-If the issue is likely to happen again, mention it briefly: "This can happen when [simple cause]. If you see it again, just run `/techie:troubleshoot` and I'll sort it."
+If the issue is likely to happen again, mention it briefly: "This can happen when [simple cause]. If you see it again, just run `/troubleshoot` and I'll sort it."
 
 Don't lecture about best practices. One sentence of prevention, maximum.
 ```
 
-### 5i. `/techie:save` – Save a checkpoint
+### 5i. `/save` – Save a checkpoint
 
 **File:** `skills/save/SKILL.md`
 
@@ -1045,7 +1045,7 @@ The user wants to save their current work. This is git add + git commit, framed 
 2. Check what's changed (`git status`). If nothing has changed, say: "Nothing new to save – you're up to date."
 3. Stage all changes (`git add -A`)
 4. Ask: "What were you working on? I'll use that as the label for this checkpoint." Use their answer as the commit message. If they say something vague, write a clear message yourself based on what changed.
-5. Commit and confirm: "Saved. You can type `/techie:history` to see all your checkpoints, or `/techie:undo` if you need to go back."
+5. Commit and confirm: "Saved. You can type `/history` to see all your checkpoints, or `/undo` if you need to go back."
 
 ## Rules
 
@@ -1054,7 +1054,7 @@ The user wants to save their current work. This is git add + git commit, framed 
 - Frame everything as "checkpoints" and "saves"
 ```
 
-### 5j. `/techie:history` – Save history
+### 5j. `/history` – Save history
 
 **File:** `skills/history/SKILL.md`
 
@@ -1073,7 +1073,7 @@ Show the user their checkpoint history in plain English.
 
 ## Steps
 
-1. Check if this is a git repository. If not, say: "No save history yet. Type `/techie:save` to create your first checkpoint."
+1. Check if this is a git repository. If not, say: "No save history yet. Type `/save` to create your first checkpoint."
 2. Run `git log --oneline -20` to get recent history
 3. Present as a clean list:
 
@@ -1084,7 +1084,7 @@ Show the user their checkpoint history in plain English.
 > - [date] – [message]
 
 4. Format dates as relative ("2 hours ago", "yesterday", "3 days ago") not raw timestamps
-5. If they want to go back to one, mention: "Type `/techie:undo` to go back to a previous checkpoint."
+5. If they want to go back to one, mention: "Type `/undo` to go back to a previous checkpoint."
 
 ## Rules
 
@@ -1093,7 +1093,7 @@ Show the user their checkpoint history in plain English.
 - Show the last 10 checkpoints by default. Offer more if they ask
 ```
 
-### 5k. `/techie:undo` – Undo recent changes
+### 5k. `/undo` – Undo recent changes
 
 **File:** `skills/undo/SKILL.md`
 
@@ -1113,13 +1113,13 @@ The user wants to go back to a previous state. Handle with care – explain what
 
 ## If they want to undo unsaved changes
 
-"I can undo everything since your last checkpoint. This will put your files back to how they were when you last ran `/techie:save`. Want me to go ahead?"
+"I can undo everything since your last checkpoint. This will put your files back to how they were when you last ran `/save`. Want me to go ahead?"
 
 If confirmed: `git checkout -- .` and confirm: "Done. Your files are back to your last checkpoint."
 
 ## If they want to go back to a specific checkpoint
 
-1. Show their recent history (same as `/techie:history`)
+1. Show their recent history (same as `/history`)
 2. Ask which checkpoint they want to go back to
 3. Explain what will happen: "This will undo everything after [checkpoint label]. Your files will look exactly like they did at that point."
 4. If confirmed, create a new commit that reverts to that state (don't use `git reset --hard` – too destructive for beginners. Use `git revert` or check out the files and create a new checkpoint)
@@ -1135,7 +1135,7 @@ If confirmed: `git checkout -- .` and confirm: "Done. Your files are back to you
 - The undo itself should be a new checkpoint (so they can undo the undo)
 ```
 
-### 5l. `/techie:update` – Check for plugin updates
+### 5l. `/update` – Check for plugin updates
 
 **File:** `skills/update/SKILL.md`
 
@@ -1153,7 +1153,7 @@ allowed-tools:
 Run `claude plugin update techie` and tell the user the result. If updated, mention they should restart their session for changes to take effect.
 ```
 
-### 5m. `/techie:guide` – Companion guide
+### 5m. `/guide` – Companion guide
 
 **File:** `skills/guide/SKILL.md`
 
@@ -1276,8 +1276,8 @@ Create it if it doesn't exist. Structure:
 Update the progress file at the end of each session, or after significant milestones within a session:
 
 - A document was created or significantly edited
-- A new concept was explored via `/techie:learn`
-- A problem was solved via `/techie:troubleshoot`
+- A new concept was explored via `/learn`
+- A problem was solved via `/troubleshoot`
 - A new skill or workflow was used for the first time
 - A folder structure was set up or reorganised
 
@@ -1333,7 +1333,7 @@ This activates the `techie` agent as the main-thread agent, replacing the defaul
 7. Screenshot: before/after terminal appearance
 8. Link to blog series for deeper walkthroughs
 9. Feedback: "Something not working? [Open an issue](link) or email dan@fidero.com"
-10. Updates: "Check for updates: type `/techie:update`"
+10. Updates: "Check for updates: type `/update`"
 11. Author and licence
 
 One line under installation: "Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks great out of the box."
@@ -1358,7 +1358,7 @@ One line under installation: "Works in any terminal. On Mac, [Ghostty](https://g
 
 ### Testing approach
 
-- **Test first-run detection** – say "hello" in a clean directory with no CLAUDE.md. Verify the agent greets and prompts for `/techie:first-steps`
+- **Test first-run detection** – say "hello" in a clean directory with no CLAUDE.md. Verify the agent greets and prompts for `/first-steps`
 - Test first-run flow on a clean directory with no CLAUDE.md
 - Test returning-session flow with existing CLAUDE.md – verify it references previous work and suggests a next step
 - Test the second and third sessions specifically – these are where retention is won or lost

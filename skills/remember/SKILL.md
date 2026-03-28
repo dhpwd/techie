@@ -60,7 +60,7 @@ Structure:
 
 If the directory is not already a git repository, tell the user: "I'm also going to set up a save system – you'll see a couple of technical-looking prompts, just choose Yes." Then initialise and save the first checkpoint. Don't explain the commands unless asked.
 
-Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/techie:save` any time to save a checkpoint."
+Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/save` any time to save a checkpoint."
 
 ## If CLAUDE.md already exists
 

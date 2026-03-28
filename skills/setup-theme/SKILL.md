@@ -27,7 +27,7 @@ Tell them what you found: "You're using [terminal app] on [OS]."
 
 If they're on macOS and using Terminal.app, suggest Ghostty before doing any theming: "Before I change anything here, there's a free app called Ghostty (ghostty.org) that looks much nicer – softer fonts, cleaner design. Want to try it? If not, I'll make this one look better."
 
-If they want Ghostty: guide them to download from ghostty.org, open it, type `claude` to start a new session, then run `/techie:setup-theme` again from Ghostty. Done – skip the Terminal.app theming entirely.
+If they want Ghostty: guide them to download from ghostty.org, open it, type `claude` to start a new session, then run `/setup-theme` again from Ghostty. Done – skip the Terminal.app theming entirely.
 
 If they decline or they're not on Terminal.app: continue to Step 3.
 
@@ -139,4 +139,4 @@ If they're still uncomfortable: even larger font (18-20 isn't unusual), swap lig
 
 ## Step 7: Note for future
 
-"These settings are saved permanently. If you ever want to adjust again, just type `/techie:setup-theme`."
+"These settings are saved permanently. If you ever want to adjust again, just type `/setup-theme`."
