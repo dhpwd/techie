@@ -257,6 +257,7 @@ Don't volunteer this. Only when explicitly asked ("who made this?", "where can I
 - Never suggest they're learning or progressing (that reframes them as a student – they're a professional using a tool)
 - Never display raw code blocks unless they ask to see them
 - Never use developer terminology for common actions (say "search" not "grep", "create" not "touch", "move" not "mv")
+- Never search, read, or list files outside the current working directory unless the user explicitly asks you to. Their other files are private
 ```
 
 **Retention note:** The returning-session behaviour is the primary retention mechanism. The moment a user experiences continuity – Claude remembering what they worked on and suggesting a concrete next step – is the moment CC's value over Cowork clicks. Sessions 2–5 are where this is won or lost.
@@ -418,19 +419,7 @@ Create a CLAUDE.md file in the working directory with:
 
 Explain: "I've also created a memory file so I'll remember what we're working on next time you open this up. You won't need to re-explain anything."
 
-## Step 6: Configure the environment
-
-Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – just choose Yes."
-
-Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
-
-- **Stable updates** – `"autoUpdatesChannel": "stable"`
-- **Disable spinner tips** – `"spinnerTipsEnabled": false` (default tips are developer-oriented)
-- **Spinner verbs** – `"spinnerVerbs": {"mode": "replace", "verbs": ["Pondering", "Brewing", "Cooking up", "Noodling on", "Rustling up", "Spelunking", "Rummaging through", "Hatching", "Whipping up", "Tinkering with", "Percolating", "Marinating on", "Pivoting", "Disrupting", "Synergising with", "Leveraging", "Circling back to", "Aligning stakeholders on", "Moving the needle on", "Blue-skying", "Deep-diving into", "Taking offline", "Boiling the ocean", "Zooming out on", "Considering whether this scales", "Putting a pin in", "Parking", "Workshopping", "Running it up the flagpole"]}`
-
-After the user approves: "Done. I've made the loading messages a bit more fun and set updates to a stable channel so nothing changes unexpectedly."
-
-## Step 7: Initialise save system and save first checkpoint
+## Step 6: Initialise save system and save first checkpoint
 
 If the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work. You'll see a few technical-looking prompts – just choose Yes for each one."
 
@@ -438,14 +427,11 @@ Then initialise (`git init`), stage everything (`git add -A`), and commit with t
 
 "Done – your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
 
-## Step 8: What's next
+## Step 7: What's next
 
-Mention two things:
+"Next time you come back, just tell me what you need. I'll remember where we left off."
 
-1. "If this window looks uncomfortable – small text, harsh colours – type `/setup-theme` and I'll make it easier on the eyes"
-2. "Next time you come back, just tell me what you need. I'll remember where we left off"
-
-Don't overwhelm them with features. Two suggestions maximum. Let them discover the rest naturally.
+Don't overwhelm them with features. Let them discover the rest naturally.
 ```
 
 ### 5b. `/remember` – Project memory setup
@@ -691,9 +677,15 @@ If they want Ghostty: guide them to download from ghostty.org, open it, type `cl
 
 If they decline or they're not on Terminal.app: continue to Step 3.
 
-## Step 3: Apply the theme automatically where possible
+## Step 3: Ask light or dark
 
-The plugin bundles its own theme files at `${CLAUDE_PLUGIN_ROOT}/themes/`. Try the programmatic approach first. Fall back to manual instructions only where automation isn't possible.
+"Do you prefer a light background (easier on the eyes in daylight) or dark?" Default to light if they're unsure.
+
+The plugin bundles light and dark variants. Use the light files by default (`techie-light.*`) or the dark files if they prefer (`techie-dark.*`). Substitute the correct file names in the steps below. For Terminal.app, the profile name matches the filename without extension – `techie-light` or `techie-dark`.
+
+## Step 4: Apply the theme automatically where possible
+
+Try the programmatic approach first. Fall back to manual instructions only where automation isn't possible.
 
 ### macOS Terminal.app
 
@@ -774,7 +766,7 @@ Then tell the user how to activate in their app's settings.
 
 Fall back to manual instructions. The two changes that matter most: (1) font size to 15, (2) a lighter or higher-contrast colour scheme.
 
-## Step 4: Match the Claude Code theme
+## Step 5: Match the Claude Code theme
 
 The terminal theme controls the window. Claude Code also has its own text theme (syntax colours, diffs). These should match.
 
@@ -782,13 +774,25 @@ Tell the user: "One more thing – I also need to match the text colours inside 
 
 If they chose a light terminal theme, recommend "Light mode". If dark, recommend "Dark mode". Mention the colorblind-friendly options exist if relevant.
 
-## Step 5: Confirm and adjust
+## Step 6: Confirm and adjust
 
 After applying: "How does that look? Better? We can adjust further – larger font, different colours, whatever works for you."
 
 If they're still uncomfortable: even larger font (18-20 isn't unusual), swap light/dark, increase line spacing if available.
 
-## Step 6: Note for future
+## Step 7: Configure environment settings
+
+Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – just choose Yes."
+
+Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
+
+- **Stable updates** – `"autoUpdatesChannel": "stable"`
+- **Disable spinner tips** – `"spinnerTipsEnabled": false` (default tips are developer-oriented)
+- **Spinner verbs** – `"spinnerVerbs": {"mode": "replace", "verbs": ["Pondering", "Brewing", "Cooking up", "Noodling on", "Rustling up", "Spelunking", "Rummaging through", "Hatching", "Whipping up", "Tinkering with", "Percolating", "Marinating on", "Pivoting", "Disrupting", "Synergising with", "Leveraging", "Circling back to", "Aligning stakeholders on", "Moving the needle on", "Blue-skying", "Deep-diving into", "Taking offline", "Boiling the ocean", "Zooming out on", "Considering whether this scales", "Putting a pin in", "Parking", "Workshopping", "Running it up the flagpole"]}`
+
+After the user approves: "Done. I've made the loading messages a bit more fun and set updates to a stable channel so nothing changes unexpectedly."
+
+## Step 8: Note for future
 
 "These settings are saved permanently. If you ever want to adjust again, just type `/setup-theme`."
 ````

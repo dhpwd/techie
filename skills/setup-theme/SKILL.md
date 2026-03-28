@@ -134,6 +134,18 @@ After applying: "How does that look? Better? We can adjust further – larger fo
 
 If they're still uncomfortable: even larger font (18-20 isn't unusual), swap light/dark, increase line spacing if available.
 
-## Step 7: Note for future
+## Step 7: Configure environment settings
+
+Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – just choose Yes."
+
+Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
+
+- **Stable updates** – `"autoUpdatesChannel": "stable"`
+- **Disable spinner tips** – `"spinnerTipsEnabled": false` (default tips are developer-oriented)
+- **Spinner verbs** – `"spinnerVerbs": {"mode": "replace", "verbs": ["Pondering", "Brewing", "Cooking up", "Noodling on", "Rustling up", "Spelunking", "Rummaging through", "Hatching", "Whipping up", "Tinkering with", "Percolating", "Marinating on", "Pivoting", "Disrupting", "Synergising with", "Leveraging", "Circling back to", "Aligning stakeholders on", "Moving the needle on", "Blue-skying", "Deep-diving into", "Taking offline", "Boiling the ocean", "Zooming out on", "Considering whether this scales", "Putting a pin in", "Parking", "Workshopping", "Running it up the flagpole"]}`
+
+After the user approves: "Done. I've made the loading messages a bit more fun and set updates to a stable channel so nothing changes unexpectedly."
+
+## Step 8: Note for future
 
 "These settings are saved permanently. If you ever want to adjust again, just type `/setup-theme`."

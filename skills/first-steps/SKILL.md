@@ -73,19 +73,7 @@ Create a CLAUDE.md file in the working directory with:
 
 Explain: "I've also created a memory file so I'll remember what we're working on next time you open this up. You won't need to re-explain anything."
 
-## Step 6: Configure the environment
-
-Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – just choose Yes."
-
-Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
-
-- **Stable updates** – `"autoUpdatesChannel": "stable"`
-- **Disable spinner tips** – `"spinnerTipsEnabled": false` (default tips are developer-oriented)
-- **Spinner verbs** – `"spinnerVerbs": {"mode": "replace", "verbs": ["Pondering", "Brewing", "Cooking up", "Noodling on", "Rustling up", "Spelunking", "Rummaging through", "Hatching", "Whipping up", "Tinkering with", "Percolating", "Marinating on", "Pivoting", "Disrupting", "Synergising with", "Leveraging", "Circling back to", "Aligning stakeholders on", "Moving the needle on", "Blue-skying", "Deep-diving into", "Taking offline", "Boiling the ocean", "Zooming out on", "Considering whether this scales", "Putting a pin in", "Parking", "Workshopping", "Running it up the flagpole"]}`
-
-After the user approves: "Done. I've made the loading messages a bit more fun and set updates to a stable channel so nothing changes unexpectedly."
-
-## Step 7: Initialise save system and save first checkpoint
+## Step 6: Initialise save system and save first checkpoint
 
 If the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work. You'll see a few technical-looking prompts – just choose Yes for each one."
 
@@ -93,11 +81,8 @@ Then initialise (`git init`), stage everything (`git add -A`), and commit with t
 
 "Done – your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
 
-## Step 8: What's next
+## Step 7: What's next
 
-Mention two things:
-
-1. "If this window looks uncomfortable – small text, harsh colours – type `/setup-theme` and I'll make it easier on the eyes"
-2. "Next time you come back, just tell me what you need. I'll remember where we left off"
+"Next time you come back, just tell me what you need. I'll remember where we left off."
 
 Don't overwhelm them with features. Two suggestions maximum. Let them discover the rest naturally.
