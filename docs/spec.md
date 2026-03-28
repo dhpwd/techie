@@ -53,7 +53,6 @@ techie/
     ├── undo/
     ├── update/
     ├── guide/
-    ├── jargon-decoder/
     └── progress-tracker/
 ```
 
@@ -65,9 +64,11 @@ techie/
 
 `settings.json` uses `"agent": "techie:techie"` (plugin-namespaced). The unnamespaced `"techie"` does not activate the agent as main thread – this is a Claude Code plugin requirement.
 
-### Preloading
+### Skill architecture
 
-Only model-invoked skills (`jargon-decoder`, `progress-tracker`) are listed in the agent's `skills` frontmatter. Preloading injects full skill content into context at startup – adding user-invoked skills would waste context window space and override their `disable-model-invocation: true` setting.
+Jargon-handling rules live directly in the agent prompt – they're a continuous behaviour modifier, not a discrete action, so the skill abstraction adds indirection without adding reuse or invocation flexibility.
+
+`progress-tracker` is preloaded via the agent's `skills` frontmatter. Ideally it would be model-invoked (description in context, full content loaded only on invocation) since progress tracking is a discrete action at specific moments. However, model-invoked skills trigger a Skill tool permission prompt, and plugin `settings.json` only supports the `agent` key – plugins can't auto-approve their own skill invocations. For the target audience, a prompt asking "Use skill techie:progress-tracker?" is unacceptable friction, so we preload at the cost of ~60 lines of always-on context.
 
 ### `initialPrompt`
 
@@ -84,6 +85,7 @@ Not supported for plugin-shipped agents. The agent's system prompt contains firs
 | Terminal.app profile names derive from filename, not the plist `name` field                 | AppleScript references `techie-light` / `techie-dark` (matching filenames), not `Techie Light`                                                                             |
 | Terminal.app theme import opens a new window                                                | `open` + `sleep 2` + AppleScript to close import window and apply to original. Must run as single Bash command – agent splits multi-step commands into separate tool calls |
 | Plugin agents cannot use `hooks`, `mcpServers`, or `permissionMode` frontmatter             | Copy agent to `.claude/agents/` if these are needed (official workaround)                                                                                                  |
+| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored    | Preload model-invoked skills to avoid Skill tool permission prompts; users can't auto-approve plugin skill invocations                                                     |
 
 ---
 
@@ -122,8 +124,7 @@ How the skills relate to each other across a user's journey:
 | `undo`             | User-invoked  | Undo recent changes                                                |
 | `update`           | User-invoked  | Check for and install plugin updates                               |
 | `guide`            | User-invoked  | Open the companion getting-started guide                           |
-| `jargon-decoder`   | Model-invoked | Auto-translates jargon inline as responses are generated           |
-| `progress-tracker` | Model-invoked | Maintains a progress file showing compounding value over time      |
+| `progress-tracker` | Model-invoked | Updates .techie/progress.md at session end and after milestones    |
 
 ---
 

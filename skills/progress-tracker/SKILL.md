@@ -1,6 +1,6 @@
 ---
 name: progress-tracker
-description: Tracks what the user has accomplished and learned across sessions. Maintains a simple progress file that shows compounding value over time.
+description: Updates .techie/progress.md at the end of each session and after significant accomplishments – document creation, concept exploration, problem solving. Runs automatically, never user-invoked.
 user-invocable: false
 disable-model-invocation: false
 allowed-tools:
