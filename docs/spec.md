@@ -697,7 +697,7 @@ The plugin bundles its own theme files at `${CLAUDE_PLUGIN_ROOT}/themes/`. Try t
 
 ### macOS Terminal.app
 
-**Colour scheme** – import the profile and apply it without opening a new window:
+**Colour scheme and font** – import and apply via AppleScript:
 
 ```bash
 cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light.terminal" "/tmp/techie-light.terminal"
@@ -705,20 +705,17 @@ open "/tmp/techie-light.terminal"
 sleep 2
 osascript -e '
 tell application "Terminal"
-  set profileName to "Techie Light"
-  set targetProfile to settings set profileName
-  -- apply to the original window (last, since import opened a new one in front)
-  set current settings of last window to targetProfile
+  if (count of windows) > 1 then close front window
+  set targetProfile to settings set "techie-light"
+  set current settings of front window to targetProfile
   set default settings to targetProfile
-  -- close the import window (front)
-  close front window
 end tell
 '
 ```
 
-If AppleScript fails, fall back to manual: "Open Terminal → Settings → Profiles → pick a lighter theme."
+Run this as a single Bash command – do not split it into separate tool calls. The `sleep 2` gives Terminal time to register the profile before AppleScript references it.
 
-**Font** – the theme file sets Menlo 15pt automatically. If they want a different size, walk them through: Cmd+, → Profiles → Text → Font → Change.
+If AppleScript fails, fall back to manual: "Open Terminal → Settings → Profiles → select techie-light → click Default."
 
 ### macOS iTerm2
 

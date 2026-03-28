@@ -35,7 +35,7 @@ If they decline or they're not on Terminal.app: continue to Step 3.
 
 "Do you prefer a light background (easier on the eyes in daylight) or dark?" Default to light if they're unsure.
 
-The plugin bundles light and dark variants. Use the light files by default (`techie-light.*`) or the dark files if they prefer (`techie-dark.*`). Substitute the correct file names AND profile names in the steps below – e.g. "Techie Light" or "Techie Dark" in the AppleScript, and the corresponding file paths.
+The plugin bundles light and dark variants. Use the light files by default (`techie-light.*`) or the dark files if they prefer (`techie-dark.*`). Substitute the correct file names in the steps below. For Terminal.app, the profile name matches the filename without extension – `techie-light` or `techie-dark`.
 
 ## Step 4: Apply the theme automatically where possible
 
@@ -43,7 +43,7 @@ Try the programmatic approach first. Fall back to manual instructions only where
 
 ### macOS Terminal.app
 
-**Colour scheme** – import the profile and apply it without opening a new window:
+**Colour scheme and font** – import and apply via AppleScript:
 
 ```bash
 cp "${CLAUDE_PLUGIN_ROOT}/themes/techie-light.terminal" "/tmp/techie-light.terminal"
@@ -51,20 +51,17 @@ open "/tmp/techie-light.terminal"
 sleep 2
 osascript -e '
 tell application "Terminal"
-  set profileName to "Techie Light"
-  set targetProfile to settings set profileName
-  -- apply to the original window (last, since import opened a new one in front)
-  set current settings of last window to targetProfile
+  if (count of windows) > 1 then close front window
+  set targetProfile to settings set "techie-light"
+  set current settings of front window to targetProfile
   set default settings to targetProfile
-  -- close the import window (front)
-  close front window
 end tell
 '
 ```
 
-If AppleScript fails, fall back to manual: "Open Terminal → Settings → Profiles → pick a lighter theme."
+Run this as a single Bash command – do not split it into separate tool calls. The `sleep 2` gives Terminal time to register the profile before AppleScript references it.
 
-**Font** – the theme file sets Menlo 15pt automatically. If they want a different size, walk them through: Cmd+, → Profiles → Text → Font → Change.
+If AppleScript fails, fall back to manual: "Open Terminal → Settings → Profiles → select techie-light → click Default."
 
 ### macOS iTerm2
 
