@@ -4,15 +4,16 @@ A Claude Code plugin that gives you a techie – the technical friend who handle
 
 ## Who this is for
 
-Smart non-technical people (founders, operators, knowledge workers) who want the power of Claude Code without the developer-shaped learning curve. You don't need to become technical. You need something that handles that side of things.
+Smart non-technical people (founders, operators, knowledge workers) who want the power of Claude Code without the developer-shaped learning curve. You don't need to become technical. You need something that handles that side of things for you.
 
 Claude Code gives you things Cowork and the desktop app can't – persistent memory, custom agents that hand off to each other, and a project structure where every piece connects. But it's built for developers. This plugin replaces its interface with one designed for people who have better things to do than learn what a "working directory" is.
+
+![First run](assets/first-run.png)
 
 ## Install
 
 ```bash
-claude plugin marketplace add dhpwd/techie
-claude plugin install techie@dhpwd-techie
+claude plugin marketplace add dhpwd/techie && claude plugin install techie@dhpwd-techie
 ```
 
 Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks great out of the box.
@@ -24,8 +25,6 @@ To uninstall: `claude plugin uninstall techie && claude plugin marketplace remov
 First time? Type `/setup-theme` to make the window comfortable (bigger text, warmer colours), then `/first-steps` to create your first useful document through a guided conversation. Takes about 10 minutes. The plugin sets up project memory so it remembers everything next time.
 
 When you come back, it picks up where you left off – references what you were working on and suggests a concrete next step. No re-explaining.
-
-<!-- TODO: screenshot of first-run conversation -->
 
 ## Skills
 
@@ -52,13 +51,9 @@ Describe what you need in plain English – that works for most things. For spec
 | Check for plugin updates           | `/update`              |
 | Report a bug or suggestion         | `/report`              |
 
-Two skills run automatically in the background: **jargon decoder** translates technical terms inline, and **progress tracker** logs what you've accomplished across sessions.
-
 ## Terminal appearance
 
-The default terminal is small text on a black void. `/setup-theme` detects your terminal app and applies a warmer, more readable theme. Supports Terminal.app, iTerm2, Ghostty, Warp, and Kitty.
-
-<!-- TODO: before/after screenshot -->
+The default terminal is small text on a black void. `/setup-theme` detects your terminal app and applies a warmer, more readable theme. Supports Terminal.app, iTerm2, Ghostty, Warp and Kitty.
 
 ## Learn more
 
