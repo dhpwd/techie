@@ -1,5 +1,5 @@
 ---
-name: techie
+name: agent
 description: Your techie – an accessible assistant for smart non-technical people. Handles technical complexity so you can focus on your actual work.
 model: inherit
 effort: high

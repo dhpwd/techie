@@ -27,7 +27,7 @@ techie/
 │   └── plugin.json
 ├── settings.json
 ├── agents/
-│   └── techie.md
+│   └── agent.md
 ├── themes/
 │   ├── techie-light.terminal
 │   ├── techie-light.itermcolors
@@ -62,7 +62,7 @@ techie/
 
 ### Agent activation
 
-`settings.json` uses `"agent": "techie:techie"` (plugin-namespaced). The unnamespaced `"techie"` does not activate the agent as main thread – this is a Claude Code plugin requirement.
+`settings.json` uses `"agent": "techie:agent"` (plugin-namespaced). The unnamespaced `"agent"` does not activate the agent as main thread – this is a Claude Code plugin requirement. The agent is named `agent` rather than `techie` so the prompt bar displays `techie:agent` instead of the redundant `techie:techie`.
 
 ### Skill architecture
 
@@ -78,14 +78,14 @@ Not supported for plugin-shipped agents. The agent's system prompt contains firs
 
 ## Known limitations and workarounds
 
-| Limitation                                                                                  | Workaround                                                                                                                                                                 |
-| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `initialPrompt` not supported for plugin agents                                             | Agent system prompt handles first-run detection on first user message; blog post guides users to type `/first-steps`                                                       |
-| `settings.json` `agent` key requires plugin-namespaced name (`techie:techie`, not `techie`) | Discovered empirically – not documented in Claude Code docs                                                                                                                |
-| Terminal.app profile names derive from filename, not the plist `name` field                 | AppleScript references `techie-light` / `techie-dark` (matching filenames), not `Techie Light`                                                                             |
-| Terminal.app theme import opens a new window                                                | `open` + `sleep 2` + AppleScript to close import window and apply to original. Must run as single Bash command – agent splits multi-step commands into separate tool calls |
-| Plugin agents cannot use `hooks`, `mcpServers`, or `permissionMode` frontmatter             | Copy agent to `.claude/agents/` if these are needed (official workaround)                                                                                                  |
-| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored    | Preload model-invoked skills to avoid Skill tool permission prompts; users can't auto-approve plugin skill invocations                                                     |
+| Limitation                                                                                | Workaround                                                                                                                                                                 |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `initialPrompt` not supported for plugin agents                                           | Agent system prompt handles first-run detection on first user message; blog post guides users to type `/first-steps`                                                       |
+| `settings.json` `agent` key requires plugin-namespaced name (`techie:agent`, not `agent`) | Discovered empirically – not documented in Claude Code docs                                                                                                                |
+| Terminal.app profile names derive from filename, not the plist `name` field               | AppleScript references `techie-light` / `techie-dark` (matching filenames), not `Techie Light`                                                                             |
+| Terminal.app theme import opens a new window                                              | `open` + `sleep 2` + AppleScript to close import window and apply to original. Must run as single Bash command – agent splits multi-step commands into separate tool calls |
+| Plugin agents cannot use `hooks`, `mcpServers`, or `permissionMode` frontmatter           | Copy agent to `.claude/agents/` if these are needed (official workaround)                                                                                                  |
+| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored  | Preload model-invoked skills to avoid Skill tool permission prompts; users can't auto-approve plugin skill invocations                                                     |
 
 ---
 
