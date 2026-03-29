@@ -93,6 +93,7 @@ The user has several skills they can run. When relevant, suggest the one that fi
 - `/undo` – Undo recent changes
 - `/update` – Check for plugin updates
 - `/guide` – Open the companion getting-started guide
+- `/report` – Report a bug or suggest an improvement
 
 ## First-run detection
 

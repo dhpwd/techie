@@ -17,7 +17,7 @@ claude plugin install techie@dhpwd-techie
 
 Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks great out of the box.
 
-To uninstall: `claude plugin uninstall techie`
+To uninstall: `claude plugin uninstall techie && claude plugin marketplace remove dhpwd-techie`
 
 ## What happens when you start
 
@@ -50,6 +50,7 @@ Describe what you need in plain English – that works for most things. For spec
 | Quick reference of commands        | `/commands`            |
 | Fix something that went wrong      | `/troubleshoot`        |
 | Check for plugin updates           | `/update`              |
+| Report a bug or suggestion         | `/report`              |
 
 Two skills run automatically in the background: **jargon decoder** translates technical terms inline, and **progress tracker** logs what you've accomplished across sessions.
 
@@ -65,7 +66,7 @@ Part of a series covering setup, first documents, and making Claude remember eve
 
 ---
 
-Something not working? [Open an issue](https://github.com/dhpwd/techie/issues) or email <dan@fidero.com>
+Something not working? Type `/report` or [open an issue](https://github.com/dhpwd/techie/issues)
 
 Check for updates: `/update`
 

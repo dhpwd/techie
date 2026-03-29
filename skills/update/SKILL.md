@@ -8,4 +8,6 @@ allowed-tools:
 
 # Update techie
 
-Run `claude plugin update techie` and tell the user the result. If updated, mention they should restart their session for changes to take effect.
+Run `claude plugin update techie@dhpwd-techie` via Bash and tell the user the result in plain English. If updated, tell them: "There's a new version. Type `/reload-plugins` to activate it."
+
+If the command fails or isn't recognised, fall back to telling the user: "Type `/plugin update techie@dhpwd-techie` and follow the prompts."
