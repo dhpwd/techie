@@ -30,26 +30,26 @@ When you come back, it picks up where you left off – references what you were 
 
 Describe what you need in plain English – that works for most things. For specific workflows:
 
-| What you want                      | What to type           |
-| ---------------------------------- | ---------------------- |
-| **Getting started**                |                        |
-| Make this window look better       | `/setup-theme`         |
-| Guided first session               | `/first-steps`         |
-| Open the getting-started guide     | `/guide`               |
-| **Doing work**                     |                        |
-| Start a complex task with guidance | `/consult [your goal]` |
-| Explain a concept                  | `/explain [topic]`     |
-| Learn something by doing           | `/learn [topic]`       |
-| **Saving work**                    |                        |
-| Save a checkpoint                  | `/save`                |
-| See your save history              | `/history`             |
-| Undo recent changes                | `/undo`                |
-| **Help & admin**                   |                        |
-| Update project memory              | `/remember`            |
-| Quick reference of commands        | `/commands`            |
-| Fix something that went wrong      | `/troubleshoot`        |
-| Check for plugin updates           | `/update`              |
-| Report a bug or suggestion         | `/report`              |
+| What you want                  | What to type           |
+| ------------------------------ | ---------------------- |
+| **Getting started**            |                        |
+| Make this window look better   | `/setup-theme`         |
+| Guided first session           | `/first-steps`         |
+| Open the getting-started guide | `/guide`               |
+| **Doing work**                 |                        |
+| Start any task the right way   | `/consult [your goal]` |
+| Explain a concept              | `/explain [topic]`     |
+| Learn something by doing       | `/learn [topic]`       |
+| **Saving work**                |                        |
+| Save a checkpoint              | `/save`                |
+| See your save history          | `/history`             |
+| Undo recent changes            | `/undo`                |
+| **Help & admin**               |                        |
+| Update project memory          | `/remember`            |
+| Quick reference of commands    | `/commands`            |
+| Fix something that went wrong  | `/troubleshoot`        |
+| Check for plugin updates       | `/update`              |
+| Report a bug or suggestion     | `/report`              |
 
 ## Terminal appearance
 

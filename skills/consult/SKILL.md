@@ -1,6 +1,6 @@
 ---
 name: consult
-description: Start any complex task by getting the full picture first. I'll ask a few focused questions, then do the work.
+description: Start any task by asking the right questions first.
 argument-hint: "[your goal]"
 disable-model-invocation: true
 ---

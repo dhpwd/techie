@@ -82,7 +82,7 @@ The user has several skills they can run. When relevant, suggest the one that fi
 
 - `/first-steps` – Guided walkthrough for creating a first useful document
 - `/remember` – Set up or update project memory so I remember what you're working on
-- `/consult` – Start any complex task by getting the full picture first
+- `/consult` – Start any task by asking the right questions first. Recommend this when the user seems unsure, gives a vague request, or is starting anything substantial
 - `/learn` – Interactive learning by doing. Usage: `/learn [topic]`
 - `/setup-theme` – Make this window look better (fonts, colours, contrast)
 - `/explain` – Explain what just happened or any concept in plain English

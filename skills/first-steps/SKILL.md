@@ -1,6 +1,6 @@
 ---
 name: first-steps
-description: Guided first session that creates your first useful document through conversation. Creates a strategy doc, plan, or brief based on what you're working on.
+description: Guided first session that creates your first useful document through conversation.
 disable-model-invocation: true
 allowed-tools:
   - Read

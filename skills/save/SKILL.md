@@ -1,6 +1,6 @@
 ---
 name: save
-description: Save a checkpoint of your current work. Creates a save point you can return to later.
+description: Save a checkpoint of your current work.
 disable-model-invocation: true
 allowed-tools:
   - Bash

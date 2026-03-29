@@ -1,6 +1,6 @@
 ---
 name: explain
-description: Layered explanation – starts plain, goes as deep as you want. Use with no arguments to explain the last thing that happened, or specify a topic and optional analogy domain.
+description: Explain what just happened, or any concept – starts plain, goes as deep as you want.
 argument-hint: "[topic] [analogy domain]"
 disable-model-invocation: true
 allowed-tools:

@@ -1,6 +1,6 @@
 ---
 name: remember
-description: Set up or update project memory so I remember what you're working on across sessions. Surveys your workspace and asks a few questions, then creates or updates your memory file.
+description: Set up or update project memory so I remember what you're working on across sessions.
 disable-model-invocation: true
 allowed-tools:
   - Read

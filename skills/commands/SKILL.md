@@ -1,6 +1,6 @@
 ---
 name: commands
-description: Quick reference of useful commands, categorised and practical. Shows what's relevant to your current situation.
+description: Quick reference of useful commands, categorised and practical.
 disable-model-invocation: true
 allowed-tools:
   - Read
@@ -39,8 +39,8 @@ Use this format – one line per command, grouped by what they'd want to do:
 
 ### Getting help
 
-| What you want                 | What to type            |
-| ----------------------------- | ----------------------- |
+| What you want                 | What to type     |
+| ----------------------------- | ---------------- |
 | Explain what just happened    | `/explain`       |
 | Learn how something works     | `/learn [topic]` |
 | Fix something that went wrong | `/troubleshoot`  |
@@ -64,9 +64,9 @@ If they have a git repository, add:
 
 | What you want         | What to type                               |
 | --------------------- | ------------------------------------------ |
-| Save a checkpoint     | `/save` or "Save a checkpoint"      |
-| See your save history | `/history` or "Show my saves"       |
-| Undo recent changes   | `/undo` or "Undo that"              |
+| Save a checkpoint     | `/save` or "Save a checkpoint"             |
+| See your save history | `/history` or "Show my saves"              |
+| Undo recent changes   | `/undo` or "Undo that"                     |
 | See what's changed    | "What have I changed since the last save?" |
 
 ## Step 3: Remind them
