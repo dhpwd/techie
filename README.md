@@ -11,10 +11,13 @@ Claude Code gives you things Cowork and the desktop app can't – persistent mem
 ## Install
 
 ```bash
-claude plugin add dhpwd/techie
+claude plugin marketplace add dhpwd/techie
+claude plugin install techie@dhpwd-techie
 ```
 
 Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks great out of the box.
+
+To uninstall: `claude plugin uninstall techie`
 
 ## What happens when you start
 

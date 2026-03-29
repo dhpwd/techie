@@ -1,0 +1,13 @@
+{
+  "name": "dhpwd-techie",
+  "owner": {
+    "name": "Dan Hopwood"
+  },
+  "plugins": [
+    {
+      "name": "techie",
+      "source": "./",
+      "description": "Accessible assistant for smart non-technical people"
+    }
+  ]
+}
