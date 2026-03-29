@@ -33,18 +33,22 @@ Describe what you need in plain English – that works for most things. For spec
 
 | What you want                      | What to type           |
 | ---------------------------------- | ---------------------- |
+| **Getting started**                |                        |
+| Make this window look better       | `/setup-theme`         |
 | Guided first session               | `/first-steps`         |
 | Open the getting-started guide     | `/guide`               |
-| Set up project memory (aka git)    | `/remember`            |
+| **Doing work**                     |                        |
 | Start a complex task with guidance | `/consult [your goal]` |
-| Learn something by doing           | `/learn [topic]`       |
-| Make this window look better       | `/setup-theme`         |
 | Explain a concept                  | `/explain [topic]`     |
-| Quick reference of commands        | `/commands`            |
-| Fix something that went wrong      | `/troubleshoot`        |
+| Learn something by doing           | `/learn [topic]`       |
+| **Saving work**                    |                        |
 | Save a checkpoint                  | `/save`                |
 | See your save history              | `/history`             |
 | Undo recent changes                | `/undo`                |
+| **Help & admin**                   |                        |
+| Update project memory              | `/remember`            |
+| Quick reference of commands        | `/commands`            |
+| Fix something that went wrong      | `/troubleshoot`        |
 | Check for plugin updates           | `/update`              |
 
 Two skills run automatically in the background: **jargon decoder** translates technical terms inline, and **progress tracker** logs what you've accomplished across sessions.
