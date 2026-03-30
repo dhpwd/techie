@@ -146,9 +146,9 @@ Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), m
 - **Permissions** – add to `permissions.allow` (don't replace existing entries):
   - `"Bash(git status *)"`, `"Bash(git diff *)"`, `"Bash(git log *)"` – viewing save state
   - `"Bash(git add *)"`, `"Bash(git commit *)"`, `"Bash(git init *)"` – saving checkpoints
-  - `"Bash(git checkout *)"`, `"Bash(git revert *)"`, `"Bash(git rev-parse *)"` – undo and detection
+  - `"Bash(git revert *)"`, `"Bash(git rev-parse *)"` – undo and detection
   - `"Bash(ls *)"`, `"Bash(echo *)"`, `"Bash(uname *)"` – directory checks and setup detection
-  - `"Bash(open *)"`, `"Bash(xdg-open *)"` – opening links in the browser
+  - `"Bash(open *)"` on macOS or `"Bash(xdg-open *)"` on Linux – opening links in the browser
   - `"Bash(cp *)"`, `"Bash(mv *)"`, `"Bash(mkdir *)"` – file and folder operations
 - **Permissions** – add to `permissions.deny` (don't replace existing entries):
   - `"Read(.env)"`, `"Read(.env.*)"` – secrets
