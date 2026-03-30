@@ -9,8 +9,8 @@ selection-foreground = #2D2A24
 
 # Normal colours
 palette = 0=#2D2A24
-palette = 1=#C33C33
-palette = 2=#428754
+palette = 1=#A8312A
+palette = 2=#326B42
 palette = 3=#BE8B28
 palette = 4=#3A69AE
 palette = 5=#8E488B
