@@ -134,9 +134,11 @@ After applying: "How does that look? Better? We can adjust further – larger fo
 
 If they're still uncomfortable: even larger font (18-20 isn't unusual), swap light/dark, increase line spacing if available.
 
-## Step 7: Configure environment settings
+## Step 7: Configure environment settings (if not already done)
 
-Tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – choose Yes."
+First, check whether the installer already configured settings by reading `~/.claude/settings.json` and looking for the `spinnerVerbs` key. If it exists, the installer handled this – skip to the confirmation message below.
+
+If `spinnerVerbs` is **not** present, tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – choose Yes."
 
 Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
 
@@ -154,6 +156,6 @@ Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), m
   - `"Read(.env)"`, `"Read(.env.*)"` – secrets
   - `"Read(~/.ssh/**)"`, `"Read(~/.aws/**)"` – credentials
 
-After the user approves: "Done. I've made the loading messages a bit more fun, set updates to a stable channel so nothing changes unexpectedly, and pre-approved the common actions so you won't get interrupted by permission prompts. These settings are saved permanently – type `/setup-theme` any time to adjust.
+After the user approves (or if the installer already handled it): "Done. I've made the loading messages a bit more fun, set updates to a stable channel so nothing changes unexpectedly, and pre-approved the common actions so you won't get interrupted by permission prompts. These settings are saved permanently – type `/setup-theme` any time to adjust.
 
 To pick up the new settings, `/exit` then run `claude` to start a fresh session."

@@ -74,18 +74,25 @@ Jargon-handling rules live directly in the agent prompt – they're a continuous
 
 Not supported for plugin-shipped agents. The agent's system prompt contains first-run detection instructions that fire when the user sends their first message. The blog post guides users to type `/first-steps` directly.
 
+### Terminal transparency
+
+The terminal shows every command and its output in real time. For developers this is useful feedback; for non-technical users it feels like "something is happening to my machine." The agent prompt includes guidance to set expectations before running commands that produce scrolling output, and to summarise the outcome after. This was added after observing a user describe the experience as "it feels like it's changing a lot on my machine – this is where people get scared."
+
 ---
 
 ## Known limitations and workarounds
 
-| Limitation                                                                                | Workaround                                                                                                                                                                 |
-| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `initialPrompt` not supported for plugin agents                                           | Agent system prompt handles first-run detection on first user message; blog post guides users to type `/first-steps`                                                       |
-| `settings.json` `agent` key requires plugin-namespaced name (`techie:agent`, not `agent`) | Discovered empirically – not documented in Claude Code docs                                                                                                                |
-| Terminal.app profile names derive from filename, not the plist `name` field               | AppleScript references `techie-light` / `techie-dark` (matching filenames), not `Techie Light`                                                                             |
-| Terminal.app theme import opens a new window                                              | `open` + `sleep 2` + AppleScript to close import window and apply to original. Must run as single Bash command – agent splits multi-step commands into separate tool calls |
-| Plugin agents cannot use `hooks`, `mcpServers`, or `permissionMode` frontmatter           | Copy agent to `.claude/agents/` if these are needed (official workaround)                                                                                                  |
-| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored  | Preload model-invoked skills to avoid Skill tool permission prompts; users can't auto-approve plugin skill invocations                                                     |
+| Limitation                                                                                                                | Workaround                                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `initialPrompt` not supported for plugin agents                                                                           | Agent system prompt handles first-run detection on first user message; blog post guides users to type `/first-steps`                                                       |
+| `settings.json` `agent` key requires plugin-namespaced name (`techie:agent`, not `agent`)                                 | Discovered empirically – not documented in Claude Code docs                                                                                                                |
+| Terminal.app profile names derive from filename, not the plist `name` field                                               | AppleScript references `techie-light` / `techie-dark` (matching filenames), not `Techie Light`                                                                             |
+| Terminal.app theme import opens a new window                                                                              | `open` + `sleep 2` + AppleScript to close import window and apply to original. Must run as single Bash command – agent splits multi-step commands into separate tool calls |
+| Plugin agents cannot use `hooks`, `mcpServers`, or `permissionMode` frontmatter                                           | Copy agent to `.claude/agents/` if these are needed (official workaround)                                                                                                  |
+| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored                                  | Preload model-invoked skills to avoid Skill tool permission prompts; users can't auto-approve plugin skill invocations                                                     |
+| Installing via `git clone` triggers Xcode Command Line Tools prompt on fresh Macs                                         | Installer downloads a zip instead – no git required. Discovered during user testing (non-technical user hit Xcode CLT wall)                                                |
+| Running `claude` from `~` causes agent to scan the home folder, triggering OS permission prompts (photos, contacts, etc.) | Installer creates `~/Workspace` and directs user there. Blog post reinforces this                                                                                          |
+| Claude Code permission prompts are alarming before `/setup-theme` can pre-approve them                                    | Installer pre-configures permissions, spinner verbs, and update channel in `settings.json` at install time, before the user ever launches Claude                           |
 
 ---
 
@@ -124,6 +131,7 @@ How the skills relate to each other across a user's journey:
 | `undo`             | User-invoked  | Undo recent changes                                                |
 | `update`           | User-invoked  | Check for and install plugin updates                               |
 | `guide`            | User-invoked  | Open the companion getting-started guide                           |
+| `report`           | User-invoked  | Report a bug or suggest an improvement                             |
 | `progress-tracker` | Model-invoked | Updates .techie/progress.md at session end and after milestones    |
 
 ---
@@ -141,23 +149,31 @@ The plugin ships light and dark themes for each supported terminal (Terminal.app
 
 ## One-command installer
 
-**Status: not yet built**
-
 **File:** `install.sh` (repo root, not inside the plugin structure)
 
-A single paste-and-go command for blog posts and WhatsApp seeds. Eliminates the chicken-and-egg problem – installs CC if missing, then installs the plugin.
+A single paste-and-go command for blog posts and WhatsApp seeds. Handles the bootstrapping problem: installs CC if missing, then installs the plugin and configures beginner-friendly settings.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/dhpwd/techie/main/install.sh | bash
 ```
 
-The script should:
+The script:
 
-1. Check if Claude Code is installed; if not, install it (`curl -fsSL https://claude.ai/install.sh | bash`)
-2. Install the techie plugin (`claude plugin install techie@dhpwd`)
-3. Print a clear "done" message: "Type `claude` and press Enter to get started"
+1. Installs Claude Code if missing (`curl -fsSL https://claude.ai/install.sh | bash`)
+2. Downloads the plugin as a zip (no git required) and registers it via the marketplace CLI
+3. Pre-configures `settings.json` – permissions, spinner verbs, update channel, spinner tips – so the user's first session has minimal permission prompts
+4. Creates `~/Workspace` and directs the user there, preventing the home-folder scanning problem
+5. Prints a clear "done" message with the two commands to run
 
-Keep the output friendly – coloured status messages, no jargon, no raw error dumps. Match the plugin's voice.
+### Design decisions
+
+**No git dependency.** `git clone` triggers an Xcode Command Line Tools prompt on fresh Macs – a 2GB download before they've even started. The zip approach adds complexity (extract, find directory, register marketplace) but removes the barrier.
+
+**Settings at install time, not first session.** Permission pre-approval originally lived in `/setup-theme` Step 7, which meant surviving a gauntlet of permission prompts before reaching the step that eliminates them. The installer now handles this upfront. `/setup-theme` checks for the `spinnerVerbs` key and skips if already configured – fallback for users who install via `claude plugin install` directly.
+
+**Surgical uninstall.** `--uninstall` removes only Techie's keys (via jq or python3), preserving other user settings. No backup-based restore: a whole-file snapshot can't reliably undo a surgical merge across install/uninstall/reinstall cycles. Falls back to manual instructions if neither tool is available.
+
+**Workspace isolation.** Without a dedicated folder, users who run `claude` from `~` trigger first-run detection on their home directory, requesting OS-level permissions (photos, contacts, etc.). The installer creates `~/Workspace` to prevent this.
 
 ---
 
@@ -165,12 +181,12 @@ Keep the output friendly – coloured status messages, no jargon, no raw error d
 
 ### Testing approach
 
-- **Test first-run detection** – say "hello" in a clean directory with no CLAUDE.md. Verify the agent greets and prompts for `/first-steps`
-- Test first-run flow on a clean directory with no CLAUDE.md
+- **Test first-run flow** – say "hello" in a clean directory with no CLAUDE.md. Verify the agent greets and prompts for `/first-steps`
 - Test returning-session flow with existing CLAUDE.md – verify it references previous work and suggests a next step
 - Test the second and third sessions specifically – these are where retention is won or lost
 - Test each skill independently
-- Test with 3-5 non-technical people from the Foundrs AI Chat group before public launch. Observe where they hesitate, what confuses them, what they skip. One round of iteration with feedback
+- **Test installer** – fresh install (no prior CC), install over existing CC with user settings, reinstall without uninstalling first, uninstall on jq-only and python3-only systems, uninstall with no jq or python3
+- Test with 3–5 non-technical people from the Foundrs AI Chat group before public launch. Observe where they hesitate, what confuses them, what they skip. One round of iteration with feedback
 - Record a first-session video for the README
 
 ### Iteration signals
