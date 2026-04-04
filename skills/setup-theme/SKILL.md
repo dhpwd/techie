@@ -124,7 +124,7 @@ Fall back to manual instructions. The two changes that matter most: (1) font siz
 
 The terminal theme controls the window. Claude Code also has its own text theme (syntax colours, diffs). These should match.
 
-Tell the user: "One more thing – I also need to match the text colours inside this window. Type `/config`, scroll down to Theme, press Space, and choose the one that matches your background (Light mode if you went light, Dark mode if you went dark). You'll see a preview so you can pick what looks best."
+Tell the user: "One more thing – I also need to match the text colours inside this window. Type `/theme` and choose the one that matches your background (Light mode if you went light, Dark mode if you went dark). You'll see a preview so you can pick what looks best."
 
 If they chose a light terminal theme, recommend "Light mode". If dark, recommend "Dark mode". Mention the colorblind-friendly options exist if relevant.
 
