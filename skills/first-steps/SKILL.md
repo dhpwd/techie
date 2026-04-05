@@ -18,6 +18,15 @@ You are guiding someone through their first session. They may be nervous about t
 
 This is a conversation, not a tutorial. Ask questions, listen, create something useful. The user should walk away with a real document they'll actually use – not a demo file they'll delete.
 
+## Before you start
+
+Check if the current working directory is the user's home folder (`~`). If so, don't proceed – they need to relaunch from a project folder. Check whether `~/Workspace` exists:
+
+- **If it exists:** "You need to be in your project folder first. Type `/exit`, then `cd Workspace`, then `claude` to come back."
+- **If it doesn't:** "You need a project folder first. Type `/exit`, then `mkdir Workspace`, then `cd Workspace`, then `claude` to come back."
+
+Stop here. Don't continue to Step 1.
+
 ## Step 1: Orient them
 
 Start with:
@@ -51,7 +60,7 @@ Good questions (adapt to context):
 - "What's already working that we should protect?"
 - "What's the one thing that keeps getting stuck?"
 
-As they answer, create the document in real time. Use clear headings, short paragraphs, and their own words where possible.
+Once you have all their answers, create the document using a relative path in the current directory (e.g. `Strategy.md`, never `~/Strategy.md`). Use clear headings, short paragraphs, and their own words where possible.
 
 ## Step 4: Deliver and explain
 
@@ -75,7 +84,13 @@ Explain: "I've also created a memory file so I'll remember what we're working on
 
 ## Step 6: Initialise save system and save first checkpoint
 
-If the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work. You'll see a few technical-looking prompts – choose Yes for each one."
+First, check if Git is available (`which git`). If it's not installed, skip the save system entirely. Tell them: "There's a checkpoint system that lets you save and undo your work, but it needs a tool installed first. It's a one-time setup but takes a few minutes to download. Want me to set that up now, or would you rather do it another time?"
+
+If they want to proceed, explain first: "You'll see a technical-looking prompt asking for permission – choose Yes. Then a popup will appear asking to install some tools – that includes what we need. It might take a few minutes to download. Let it finish, then type `/save` and the checkpoint system will be ready." Then run `xcode-select --install` (macOS).
+
+If they'd rather skip it, say: "No problem – your documents are saved normally on your computer either way. You can set this up any time by typing `/save` and I'll walk you through it." Then go straight to Step 7.
+
+If Git is available and the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work."
 
 Then initialise (`git init`), stage everything (`git add -A`), and commit with the message "First session – [document name] created". Don't explain what the commands do unless asked – just confirm the outcome:
 
@@ -83,6 +98,6 @@ Then initialise (`git init`), stage everything (`git add -A`), and commit with t
 
 ## Step 7: What's next
 
-"Next time you come back, just tell me what you need. I'll remember where we left off."
+"Next time you come back, just tell me what you need. I'll remember where we left off. When you're done for now, type `/exit`."
 
 Don't overwhelm them with features. Two suggestions maximum. Let them discover the rest naturally.

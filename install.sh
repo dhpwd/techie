@@ -10,6 +10,9 @@
 
 set -eo pipefail
 
+# Reconnect stdin to the terminal so the shell remains usable after curl|bash
+exec < /dev/tty 2>/dev/null || true
+
 # ---------------------------------------------------------------------------
 # Colours
 # ---------------------------------------------------------------------------
@@ -254,6 +257,8 @@ PYEOF
 # Step 1 – Claude Code
 # ---------------------------------------------------------------------------
 
+CC_NEEDS_NEW_TERMINAL=false
+
 if ! command -v claude &> /dev/null; then
   if [ -x "$HOME/.local/bin/claude" ]; then
     echo -e "  ${D}Claude Code found but not on PATH – fixing...${R}"
@@ -272,6 +277,8 @@ if ! command -v claude &> /dev/null; then
     echo "    Close this terminal, open a new one, and run this installer again."
     exit 1
   fi
+
+  CC_NEEDS_NEW_TERMINAL=true
 
   echo -e "  ${G}✓${R} Claude Code installed"
   echo ""
@@ -357,9 +364,20 @@ fi
 # ---------------------------------------------------------------------------
 
 echo ""
-echo -e "  ${G}All done.${R} To get started:"
+echo -e "  ${G}All done!${R}"
 echo ""
-echo -e "    ${C}cd ~/${WORKSPACE##*/}${R}"
+
+if [[ "$CC_NEEDS_NEW_TERMINAL" == true ]]; then
+  echo -e "  Claude Code was just installed. Open a fresh terminal to make it available:"
+  echo -e "  ${D}(Spotlight: press Cmd+Space, type Terminal, press Enter)${R}"
+  echo ""
+  echo -e "  Then type these two commands, pressing Enter after each:"
+else
+  echo -e "  Type these two commands, pressing Enter after each:"
+fi
+
+echo ""
+echo -e "    ${C}cd ${WORKSPACE##*/}${R}"
 echo -e "    ${C}claude${R}"
 echo ""
 echo -e "  ${D}To undo everything later:${R}"

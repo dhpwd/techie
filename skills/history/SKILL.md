@@ -10,6 +10,10 @@ allowed-tools:
 
 Show the user their checkpoint history in plain English.
 
+## Prerequisites
+
+Check if Git is available (`which git`). If not: "Save history isn't available yet – it needs a one-time setup first. Type `/save` and I'll walk you through it." Then stop.
+
 ## Steps
 
 1. Check if this is a git repository. If not, say: "No save history yet. Type `/save` to create your first checkpoint."

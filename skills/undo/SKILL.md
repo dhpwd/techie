@@ -11,6 +11,10 @@ allowed-tools:
 
 The user wants to go back to a previous state. Handle with care – explain what will happen before doing it.
 
+## Prerequisites
+
+Check if Git is available (`which git`). If not: "Undo needs the checkpoint system, which requires a one-time setup first. Type `/save` and I'll walk you through it." Then stop.
+
 ## If they want to undo unsaved changes
 
 "I can undo everything since your last checkpoint. This will put your files back to how they were when you last ran `/save`. Want me to go ahead?"
