@@ -52,8 +52,7 @@ techie/
     ├── history/
     ├── undo/
     ├── update/
-    ├── guide/
-    └── progress-tracker/
+    └── guide/
 ```
 
 ---
@@ -68,7 +67,7 @@ techie/
 
 Jargon-handling rules live directly in the agent prompt – they're a continuous behaviour modifier, not a discrete action, so the skill abstraction adds indirection without adding reuse or invocation flexibility.
 
-`progress-tracker` is preloaded via the agent's `skills` frontmatter. Ideally it would be model-invoked (description in context, full content loaded only on invocation) since progress tracking is a discrete action at specific moments. However, model-invoked skills trigger a Skill tool permission prompt, and plugin `settings.json` only supports the `agent` key – plugins can't auto-approve their own skill invocations. For the target audience, a prompt asking "Use skill techie:progress-tracker?" is unacceptable friction, so we preload at the cost of ~60 lines of always-on context.
+Progress tracking lives directly in the agent prompt rather than as a separate skill. It was originally a model-invoked skill, but model-invoked skills trigger a Skill tool permission prompt, and plugin `settings.json` only supports the `agent` key – plugins can't auto-approve their own skill invocations. For the target audience, a prompt asking "Use skill techie:progress-tracker?" is unacceptable friction, so the instructions were inlined into the agent prompt at the cost of ~30 lines of always-on context.
 
 ### `initialPrompt`
 
@@ -89,7 +88,7 @@ The terminal shows every command and its output in real time. For developers thi
 | Terminal.app profile names derive from filename, not the plist `name` field                                               | AppleScript references `techie-light` / `techie-dark` (matching filenames), not `Techie Light`                                                                             |
 | Terminal.app theme import opens a new window                                                                              | `open` + `sleep 2` + AppleScript to close import window and apply to original. Must run as single Bash command – agent splits multi-step commands into separate tool calls |
 | Plugin agents cannot use `hooks`, `mcpServers`, or `permissionMode` frontmatter                                           | Copy agent to `.claude/agents/` if these are needed (official workaround)                                                                                                  |
-| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored                                  | Preload model-invoked skills to avoid Skill tool permission prompts; users can't auto-approve plugin skill invocations                                                     |
+| Plugin `settings.json` only supports the `agent` key – `permissions` is silently ignored                                  | Inline skill instructions into the agent prompt so they execute without a Skill tool invocation                                                                            |
 | Installing via `git clone` triggers Xcode Command Line Tools prompt on fresh Macs                                         | Installer downloads a zip instead – no git required. Discovered during user testing (non-technical user hit Xcode CLT wall)                                                |
 | Running `claude` from `~` causes agent to scan the home folder, triggering OS permission prompts (photos, contacts, etc.) | Installer creates `~/Workspace` and directs user there. Agent first-run detection also redirects from `~` as a safety net. Blog post reinforces this                       |
 | `curl \| bash` can leave terminal unresponsive (stdin is the pipe, not the terminal)                                      | `exec < /dev/tty` at script start reconnects stdin. New terminal only suggested when CC was freshly installed (PATH needs a new shell)                                     |
@@ -102,39 +101,40 @@ The terminal shows every command and its output in real time. For developers thi
 
 How the skills relate to each other across a user's journey:
 
-| When                             | What happens                                      | Mechanism                                     |
-| -------------------------------- | ------------------------------------------------- | --------------------------------------------- |
-| First session (empty workspace)  | Guided setup: create first document + CLAUDE.md   | `/first-steps` (includes memory setup)        |
-| First session (existing project) | Survey files, create CLAUDE.md from what's here   | `/remember` (offered by first-run detection)  |
-| Returning session                | Greet, reference previous work, suggest next step | Agent prompt (reads CLAUDE.md)                |
-| Occasionally, as workspace grows | Update CLAUDE.md with new key documents           | `/remember` (user runs manually)              |
-| End of every session             | Log what was accomplished                         | `progress-tracker` (model-invoked, automatic) |
+| When                             | What happens                                      | Mechanism                                    |
+| -------------------------------- | ------------------------------------------------- | -------------------------------------------- |
+| First session (empty workspace)  | Guided setup: create first document + CLAUDE.md   | `/first-steps` (includes memory setup)       |
+| First session (existing project) | Survey files, create CLAUDE.md from what's here   | `/remember` (offered by first-run detection) |
+| Returning session                | Greet, reference previous work, suggest next step | Agent prompt (reads CLAUDE.md)               |
+| Occasionally, as workspace grows | Update CLAUDE.md with new key documents           | `/remember` (user runs manually)             |
+| End of every session             | Log what was accomplished                         | Agent prompt (automatic)                     |
 
-**Key distinction:** `remember` is for **project setup** (teach Claude about the workspace – mostly one-time, occasionally re-run). `progress-tracker` is for **session bookkeeping** (log what happened – automatic, every session).
+**Key distinction:** `remember` is for **project setup** (teach Claude about the workspace – mostly one-time, occasionally re-run). Progress tracking is for **session bookkeeping** (log what happened – automatic, every session).
 
 **Retention note:** The returning-session behaviour is the primary retention mechanism. The moment a user experiences continuity – Claude remembering what they worked on and suggesting a concrete next step – is the moment CC's value over Cowork clicks. Sessions 2–5 are where this is won or lost.
+
+**Progress as evidence:** The progress log complements this by building a cumulative record. CLAUDE.md answers "what's next" – `.techie/progress.md` answers "what have I done?" The agent doesn't read it proactively; it reads it reactively when a user expresses doubt ("is this actually useful?", "what have I done?"). Showing concrete evidence – "you've created 3 documents and explored 2 concepts across 4 sessions" – is insurance for the moment someone questions whether the tool is worth their time.
 
 ---
 
 ## Skill reference
 
-| Skill              | Type          | Purpose                                                            |
-| ------------------ | ------------- | ------------------------------------------------------------------ |
-| `first-steps`      | User-invoked  | Guided first session – creates a strategy doc through conversation |
-| `remember`         | User-invoked  | Set up or update project memory (CLAUDE.md) for any workspace      |
-| `consult`          | User-invoked  | Guided questions before executing any complex task                 |
-| `learn`            | User-invoked  | Interactive concept learning by doing                              |
-| `setup-theme`      | User-invoked  | Terminal appearance customisation (fonts, colours, contrast)       |
-| `explain`          | User-invoked  | Scaffolded explanation from plain English to full technical detail |
-| `commands`         | User-invoked  | Context-aware quick reference of what the user can do              |
-| `troubleshoot`     | User-invoked  | Error diagnosis and fix in plain language                          |
-| `save`             | User-invoked  | Save a checkpoint of current work (git add + commit)               |
-| `history`          | User-invoked  | Show save history in plain English                                 |
-| `undo`             | User-invoked  | Undo recent changes                                                |
-| `update`           | User-invoked  | Check for and install plugin updates                               |
-| `guide`            | User-invoked  | Open the companion getting-started guide                           |
-| `report`           | User-invoked  | Report a bug or suggest an improvement                             |
-| `progress-tracker` | Model-invoked | Updates .techie/progress.md at session end and after milestones    |
+| Skill          | Type         | Purpose                                                            |
+| -------------- | ------------ | ------------------------------------------------------------------ |
+| `first-steps`  | User-invoked | Guided first session – creates a strategy doc through conversation |
+| `remember`     | User-invoked | Set up or update project memory (CLAUDE.md) for any workspace      |
+| `consult`      | User-invoked | Guided questions before executing any complex task                 |
+| `learn`        | User-invoked | Interactive concept learning by doing                              |
+| `setup-theme`  | User-invoked | Terminal appearance customisation (fonts, colours, contrast)       |
+| `explain`      | User-invoked | Scaffolded explanation from plain English to full technical detail |
+| `commands`     | User-invoked | Context-aware quick reference of what the user can do              |
+| `troubleshoot` | User-invoked | Error diagnosis and fix in plain language                          |
+| `save`         | User-invoked | Save a checkpoint of current work (git add + commit)               |
+| `history`      | User-invoked | Show save history in plain English                                 |
+| `undo`         | User-invoked | Undo recent changes                                                |
+| `update`       | User-invoked | Check for and install plugin updates                               |
+| `guide`        | User-invoked | Open the companion getting-started guide                           |
+| `report`       | User-invoked | Report a bug or suggest an improvement                             |
 
 ---
 
