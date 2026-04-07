@@ -10,9 +10,6 @@
 
 set -eo pipefail
 
-# Reconnect stdin to the terminal so the shell remains usable after curl|bash
-exec < /dev/tty 2>/dev/null || true
-
 # ---------------------------------------------------------------------------
 # Colours
 # ---------------------------------------------------------------------------
@@ -211,7 +208,7 @@ EOF
       --argjson pd "$permissions_deny" \
       --argjson sv "$spinner_verbs" \
       '
-      # Merge permissions – deduplicate, set default mode
+      # acceptEdits avoids file-creation prompts that confuse non-technical users
       .permissions.defaultMode = "acceptEdits" |
       .permissions.allow = ((.permissions.allow // []) + $pa | unique | sort) |
       .permissions.deny = ((.permissions.deny // []) + $pd | unique | sort) |
@@ -387,6 +384,6 @@ echo ""
 echo -e "    ${C}cd ${WORKSPACE##*/}${R}"
 echo -e "    ${C}claude${R}"
 echo ""
-echo -e "  ${D}To undo everything later:${R}"
+echo -e "  ${D}If you ever need to uninstall:${R}"
 echo -e "  ${D}curl -fsSL https://raw.githubusercontent.com/dhpwd/techie/main/install.sh | bash -s -- --uninstall${R}"
 echo ""
