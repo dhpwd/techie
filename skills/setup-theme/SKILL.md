@@ -136,7 +136,9 @@ If they're still uncomfortable: even larger font (18-20 isn't unusual), swap lig
 
 ## Step 7: Configure environment settings (if not already done)
 
-First, check whether the installer already configured settings by reading `~/.claude/settings.json` and looking for the `spinnerVerbs` key. If it exists, the installer handled this – skip to the confirmation message below.
+Tell the user: "Let me check one more thing – there are some behind-the-scenes settings that make this work smoother for you. You'll see a permission prompt asking to read a file – choose Yes. Happy for me to go ahead?"
+
+Wait for them to confirm before continuing. Then read `~/.claude/settings.json` and look for the `spinnerVerbs` key. If it exists, the installer already handled this – skip to the confirmation message below.
 
 If `spinnerVerbs` is **not** present, tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – choose Yes."
 
