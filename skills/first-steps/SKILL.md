@@ -71,16 +71,18 @@ When the document is ready:
 3. Read back the key sections so they can confirm it captures what they meant
 4. Ask: "Does this feel right? Anything to add or change?"
 
-## Step 5: Set up memory
+## Step 5: Transition and set up memory
 
-Create a CLAUDE.md file in the working directory with:
+Once the user confirms the document is right (or after making any changes they requested), pause before doing anything else. Say something like:
+
+"Before we wrap up, I'll do two quick things: set up a memory file so I remember what we discussed next time, and a save system so you can save checkpoints of your work. You'll see some text appear – that's just me working. Happy for me to go ahead?"
+
+Wait for them to confirm before continuing. Then create a CLAUDE.md file in the working directory with:
 
 - A brief summary of what they're working on (from the conversation)
 - The document(s) you created
 - Any preferences they've mentioned
 - A `## Next sessions` section with 2-3 specific follow-up suggestions based on what they created. Examples: "Draft an outreach email using the strategy document", "Create a project timeline", "Flesh out the audience section". The returning-session greeting draws from this section
-
-Explain: "I've also created a memory file so I'll remember what we're working on next time you open this up. You won't need to re-explain anything."
 
 ## Step 6: Initialise save system and save first checkpoint
 
@@ -94,7 +96,7 @@ If Git is available and the directory is not already a git repository, tell the 
 
 Then initialise (`git init`), stage everything (`git add -A`), and commit with the message "First session – [document name] created". Don't explain what the commands do unless asked – just confirm the outcome:
 
-"Done – your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
+"All set. I've created a memory file so I'll remember this next time, and your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
 
 ## Step 7: What's next
 
