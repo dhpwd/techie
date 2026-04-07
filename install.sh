@@ -54,6 +54,9 @@ if [[ "$1" == "--uninstall" ]]; then
         # Remove Techie-managed top-level keys
         del(.autoUpdatesChannel, .spinnerTipsEnabled, .spinnerVerbs) |
 
+        # Remove defaultMode if Techie set it
+        if .permissions.defaultMode == "acceptEdits" then del(.permissions.defaultMode) else . end |
+
         # Remove Techie-managed permission entries (keep user-added ones)
         if .permissions.allow then
           .permissions.allow -= [
@@ -106,6 +109,8 @@ techie_allow = {
 techie_deny = {"Read(.env)","Read(.env.*)","Read(~/.ssh/**)","Read(~/.aws/**)"}
 
 perms = s.get("permissions", {})
+if perms.get("defaultMode") == "acceptEdits":
+    del perms["defaultMode"]
 if "allow" in perms:
     perms["allow"] = [x for x in perms["allow"] if x not in techie_allow]
     if not perms["allow"]:
@@ -206,7 +211,8 @@ EOF
       --argjson pd "$permissions_deny" \
       --argjson sv "$spinner_verbs" \
       '
-      # Merge permissions.allow – deduplicate
+      # Merge permissions – deduplicate, set default mode
+      .permissions.defaultMode = "acceptEdits" |
       .permissions.allow = ((.permissions.allow // []) + $pa | unique | sort) |
       .permissions.deny = ((.permissions.deny // []) + $pd | unique | sort) |
 
@@ -231,6 +237,7 @@ if os.path.exists(settings_path):
         settings = json.load(f)
 
 perms = settings.setdefault("permissions", {})
+perms["defaultMode"] = "acceptEdits"
 existing_allow = perms.get("allow", [])
 existing_deny = perms.get("deny", [])
 perms["allow"] = sorted(set(existing_allow + pa))

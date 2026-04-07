@@ -145,6 +145,7 @@ Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), m
 - **Stable updates** – `"autoUpdatesChannel": "stable"`
 - **Disable spinner tips** – `"spinnerTipsEnabled": false` (default tips are developer-oriented)
 - **Spinner verbs** – `"spinnerVerbs": {"mode": "replace", "verbs": ["Pondering", "Brewing", "Cooking up", "Noodling on", "Rustling up", "Spelunking", "Rummaging through", "Hatching", "Whipping up", "Tinkering with", "Percolating", "Marinating on", "Pivoting", "Disrupting", "Synergising with", "Leveraging", "Circling back to", "Aligning stakeholders on", "Moving the needle on", "Blue-skying", "Deep-diving into", "Taking offline", "Boiling the ocean", "Zooming out on", "Considering whether this scales", "Putting a pin in", "Parking", "Workshopping", "Running it up the flagpole"]}`
+- **Default mode** – `"permissions": {"defaultMode": "acceptEdits"}` – auto-approves file creation and editing so users aren't interrupted by permission prompts for every file
 - **Permissions** – add to `permissions.allow` (don't replace existing entries):
   - `"Bash(git status *)"`, `"Bash(git diff *)"`, `"Bash(git log *)"` – viewing save state
   - `"Bash(git add *)"`, `"Bash(git commit *)"`, `"Bash(git init *)"` – saving checkpoints
