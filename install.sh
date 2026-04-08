@@ -47,7 +47,7 @@ if [[ "$1" == "--uninstall" ]]; then
   # Remove only the keys Techie added, preserving everything else
   if [[ -f "$SETTINGS_FILE" ]]; then
     if command -v jq &>/dev/null; then
-      jq '
+      updated=$(jq '
         # Remove Techie-managed top-level keys
         del(.autoUpdatesChannel, .spinnerTipsEnabled, .spinnerVerbs) |
 
@@ -75,12 +75,12 @@ if [[ "$1" == "--uninstall" ]]; then
         if .permissions.allow == [] then del(.permissions.allow) else . end |
         if .permissions.deny == [] then del(.permissions.deny) else . end |
         if .permissions == {} then del(.permissions) else . end
-      ' "$SETTINGS_FILE" > "${SETTINGS_FILE}.tmp"
+      ' "$SETTINGS_FILE")
 
-      if jq -e '. == {}' "${SETTINGS_FILE}.tmp" &>/dev/null; then
-        rm "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
+      if echo "$updated" | jq -e '. == {}' &>/dev/null; then
+        rm "$SETTINGS_FILE"
       else
-        mv "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
+        printf '%s\n' "$updated" > "$SETTINGS_FILE"
       fi
       echo -e "  ${G}✓${R} Techie settings removed"
 
@@ -217,7 +217,7 @@ EOF
       .autoUpdatesChannel = "stable" |
       .spinnerTipsEnabled = false |
       .spinnerVerbs = {"mode": "replace", "verbs": $sv}
-      ' > "${SETTINGS_FILE}.tmp" && mv "${SETTINGS_FILE}.tmp" "$SETTINGS_FILE"
+      ' > "$SETTINGS_FILE"
 
   elif command -v python3 &>/dev/null; then
     python3 - "$SETTINGS_FILE" "$permissions_allow" "$permissions_deny" "$spinner_verbs" <<'PYEOF'
@@ -244,11 +244,9 @@ settings["autoUpdatesChannel"] = "stable"
 settings["spinnerTipsEnabled"] = False
 settings["spinnerVerbs"] = {"mode": "replace", "verbs": sv}
 
-tmp_path = settings_path + ".tmp"
-with open(tmp_path, "w") as f:
+with open(settings_path, "w") as f:
     json.dump(settings, f, indent=2)
     f.write("\n")
-os.rename(tmp_path, settings_path)
 PYEOF
   else
     echo -e "  ${Y}!${R} Could not configure settings (need jq or python3)."
@@ -268,7 +266,7 @@ if ! command -v claude &> /dev/null; then
     echo -e "  ${D}Claude Code found but not on PATH – fixing...${R}"
   else
     echo -e "  ${D}Claude Code not found – installing...${R}"
-    curl -fsSL https://claude.ai/install.sh | bash -s stable
+    curl -fsSL https://claude.ai/install.sh | bash -s stable 2>&1 | sed 's/^/  /'
     echo ""
   fi
 
