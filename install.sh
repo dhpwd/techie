@@ -62,7 +62,8 @@ if [[ "$1" == "--uninstall" ]]; then
             "Bash(git revert *)","Bash(git rev-parse *)",
             "Bash(ls *)","Bash(echo *)","Bash(uname *)",
             "Bash(cp *)","Bash(mv *)","Bash(mkdir *)",
-            "Bash(open *)","Bash(xdg-open *)"
+            "Bash(open *)","Bash(xdg-open *)","Bash(pbcopy *)",
+            "WebFetch"
           ]
         else . end |
         if .permissions.deny then
@@ -101,7 +102,8 @@ techie_allow = {
     "Bash(git revert *)","Bash(git rev-parse *)",
     "Bash(ls *)","Bash(echo *)","Bash(uname *)",
     "Bash(cp *)","Bash(mv *)","Bash(mkdir *)",
-    "Bash(open *)","Bash(xdg-open *)",
+    "Bash(open *)","Bash(xdg-open *)","Bash(pbcopy *)",
+    "WebFetch",
 }
 techie_deny = {"Read(.env)","Read(.env.*)","Read(~/.ssh/**)","Read(~/.aws/**)"}
 
@@ -190,7 +192,7 @@ merge_settings() {
 
   local permissions_allow
   permissions_allow=$(cat <<EOF
-["Bash(git status *)","Bash(git diff *)","Bash(git log *)","Bash(git add *)","Bash(git commit *)","Bash(git init *)","Bash(git revert *)","Bash(git rev-parse *)","Bash(ls *)","Bash(echo *)","Bash(uname *)","Bash(cp *)","Bash(mv *)","Bash(mkdir *)","$open_cmd"]
+["Bash(git status *)","Bash(git diff *)","Bash(git log *)","Bash(git add *)","Bash(git commit *)","Bash(git init *)","Bash(git revert *)","Bash(git rev-parse *)","Bash(ls *)","Bash(echo *)","Bash(uname *)","Bash(cp *)","Bash(mv *)","Bash(mkdir *)","$open_cmd","Bash(pbcopy *)","WebFetch"]
 EOF
   )
   local permissions_deny='["Read(.env)","Read(.env.*)","Read(~/.ssh/**)","Read(~/.aws/**)"]'

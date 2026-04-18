@@ -155,6 +155,8 @@ Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), m
   - `"Bash(ls *)"`, `"Bash(echo *)"`, `"Bash(uname *)"` – directory checks and setup detection
   - `"Bash(open *)"` on macOS or `"Bash(xdg-open *)"` on Linux – opening links in the browser
   - `"Bash(cp *)"`, `"Bash(mv *)"`, `"Bash(mkdir *)"` – file and folder operations
+  - `"Bash(pbcopy *)"` on macOS – copy output to the clipboard
+  - `"WebFetch"` – fetching web pages for research and summaries
 - **Permissions** – add to `permissions.deny` (don't replace existing entries):
   - `"Read(.env)"`, `"Read(.env.*)"` – secrets
   - `"Read(~/.ssh/**)"`, `"Read(~/.aws/**)"` – credentials
