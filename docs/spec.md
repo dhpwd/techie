@@ -14,8 +14,8 @@ Architecture decisions, session lifecycle, and design rationale for the Techie p
 - [Subagents](https://code.claude.com/docs/en/sub-agents.md) – agent definitions, `initialPrompt`, `memory`, preloaded skills, main-thread agent
 - [Output styles](https://code.claude.com/docs/en/output-styles.md) – custom output style format
 - [Plugin marketplaces](https://code.claude.com/docs/en/plugin-marketplaces.md) – distribution and marketplace setup
-- `~/Fidero/OS/Reference/Non-Coding Agentic Workflows.md` – the "core context pattern" for CLAUDE.md in knowledge-work projects (internal, not published)
-- `~/Fidero/OS/Reference/Non-Technical Guide Approach.md` – voice and structure principles for the target audience (internal, not published)
+- `{Fidero vault}/Reference/Non-Coding Agentic Workflows.md` – the "core context pattern" for CLAUDE.md in knowledge-work projects (internal, not published)
+- `{Fidero vault}/Reference/Non-Technical Guide Approach.md` – voice and structure principles for the target audience (internal, not published)
 
 ---
 
