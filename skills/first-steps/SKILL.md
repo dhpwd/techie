@@ -1,6 +1,6 @@
 ---
 name: first-steps
-description: Guided first session that creates your first useful document through conversation.
+description: Create your first useful document through a guided conversation.
 disable-model-invocation: true
 allowed-tools:
   - Read
@@ -20,10 +20,10 @@ This is a conversation, not a tutorial. Ask questions, listen, create something 
 
 ## Before you start
 
-Check if the current working directory is the user's home folder (`~`). If so, don't proceed – they need to relaunch from a project folder. Check whether `~/Workspace` exists:
+Check if the current working directory is the user's home folder (`~`). If so, don't proceed – they need to relaunch from a project folder. Say: "You're in your home folder – that's your computer's main filing cabinet, not a good place to work from. We need to be inside a project folder." Then check whether `~/Workspace` exists:
 
-- **If it exists:** "You need to be in your project folder first. Type `/exit`, then `cd Workspace`, then `claude` to come back."
-- **If it doesn't:** "You need a project folder first. Type `/exit`, then `mkdir Workspace`, then `cd Workspace`, then `claude` to come back."
+- **If it exists:** "You already have a Workspace folder. Type `/exit`, then type `cd Workspace` and press Enter, then type `claude` to start again."
+- **If it doesn't:** "Let's create a folder for your work. Type `/exit`, then type these three commands, pressing Enter after each: `mkdir Workspace` then `cd Workspace` then `claude`"
 
 Stop here. Don't continue to Step 1.
 
@@ -73,30 +73,45 @@ When the document is ready:
 
 ## Step 5: Transition and set up memory
 
-Once the user confirms the document is right (or after making any changes they requested), pause before doing anything else. Say something like:
+Once the user confirms the document is right (or after making any changes they requested), quietly check whether the save system will work – Step 6 depends on it:
+
+- On macOS, run `xcode-select -p`. It's silent and safe. Don't trust `which git` – fresh Macs have a placeholder that passes that check, then triggers Apple's install popup the moment you run a real Git command
+- On other systems, check `git --version` runs
+
+Then pause before doing anything else. If the save system will work, say something like:
 
 "Before we wrap up, I'll do two quick things: set up a memory file so I remember what we discussed next time, and a save system so you can save checkpoints of your work. You'll see some text appear – that's just me working. Happy for me to go ahead?"
 
-Wait for them to confirm before continuing. Then create a CLAUDE.md file in the working directory with:
+If it won't work, promise only the memory file – the save system gets its own conversation in Step 6.
 
-- A brief summary of what they're working on (from the conversation)
-- The document(s) you created
-- Any preferences they've mentioned
-- A `## Next sessions` section with 2-3 specific follow-up suggestions based on what they created. Examples: "Draft an outreach email using the strategy document", "Create a project timeline", "Flesh out the audience section". The returning-session greeting draws from this section
+Wait for them to confirm before continuing. Then create:
+
+1. A CLAUDE.md file in the working directory with:
+   - A brief summary of what they're working on (from the conversation)
+   - The document(s) you created
+   - Any preferences they've mentioned
+   - A `## Next sessions` section with 2-3 specific follow-up suggestions based on what they created. Examples: "Draft an outreach email using the strategy document", "Create a project timeline", "Flesh out the audience section". The returning-session greeting draws from this section
+2. Your progress file at `.techie/progress.md` (structure is in your progress-tracking instructions), recording the document created and this first session
+
+Confirm simply: "Memory file's ready – I'll remember all this next time."
 
 ## Step 6: Initialise save system and save first checkpoint
 
-First, check if Git is available (`which git`). If it's not installed, skip the save system entirely. Tell them: "There's a checkpoint system that lets you save and undo your work, but it needs a tool installed first. It's a one-time setup but takes a few minutes to download. Want me to set that up now, or would you rather do it another time?"
+**If the Step 5 check failed** (missing developer tools on macOS, no Git elsewhere), tell them: "There's also a checkpoint system that lets you save and undo versions of your work, but it needs a tool installed first. It's a one-time setup but takes a few minutes to download. Want me to set that up now, or would you rather do it another time?"
 
-If they want to proceed, explain first: "You'll see a technical-looking prompt asking for permission – choose Yes. Then a popup will appear asking to install some tools – that includes what we need. It might take a few minutes to download. Let it finish, then type `/save` and the checkpoint system will be ready." Then run `xcode-select --install` (macOS).
+If they want to proceed on macOS, explain first: "If a permission prompt appears, choose Yes. Then a popup will appear asking to install some tools – that includes what we need. It might take a few minutes to download. Let it finish, then type `/save` and the checkpoint system will be ready." Then run `xcode-select --install`. On other systems, offer to install Git with their package manager, explaining what will happen before you run anything.
 
 If they'd rather skip it, say: "No problem – your documents are saved normally on your computer either way. You can set this up any time by typing `/save` and I'll walk you through it." Then go straight to Step 7.
 
-If Git is available and the directory is not already a git repository, tell the user: "I'm going to set up a save system so you can save checkpoints of your work."
+**If the Step 5 check passed:**
 
-Then initialise (`git init`), stage everything (`git add -A`), and commit with the message "First session – [document name] created". Don't explain what the commands do unless asked – just confirm the outcome:
+1. If the directory is not already a git repository, initialise one (`git init`)
+2. Check an identity is configured (`git config user.email` – empty output means it isn't). If not, set one for this folder only: `git config user.name "[their first name]"` (or "Techie" if you don't know it) and `git config user.email "techie@localhost"`. Without this, the first save fails on brand-new computers with a raw git error
+3. Stage everything (`git add -A`) and commit with the message "First session – [document name] created"
 
-"All set. I've created a memory file so I'll remember this next time, and your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
+Don't explain what the commands do unless asked – confirm the outcome:
+
+"Your save system is ready. Type `/save` any time to save a checkpoint, and `/undo` to go back."
 
 ## Step 7: What's next
 

@@ -1,6 +1,6 @@
 ---
 name: remember
-description: Set up or update project memory so I remember what you're working on across sessions.
+description: Set up or update project memory so future sessions pick up where you left off.
 disable-model-invocation: true
 allowed-tools:
   - Read
@@ -58,9 +58,11 @@ Structure:
 - [2-3 specific follow-up suggestions based on what's here]
 ```
 
-If the directory is not already a git repository, tell the user: "I'm also going to set up a save system – you'll see a couple of technical-looking prompts, choose Yes." Then initialise and save the first checkpoint. Don't explain the commands unless asked.
+If the directory is not already a git repository, check the save system will work first: on macOS run `xcode-select -p` (silent and safe – don't trust `which git`, fresh Macs have a placeholder that triggers Apple's install popup on the first real Git command); on other systems check `git --version` runs. If it won't work, skip the save system – `/save` walks them through setup when they're ready.
 
-Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/save` any time to save a checkpoint."
+If it will work, tell the user: "I'm also going to set up a save system – if any permission prompts appear, choose Yes." Then initialise (`git init`), check an identity is configured (`git config user.email` – if empty, set one for this folder only: `git config user.name "[their first name]"` or "Techie", and `git config user.email "techie@localhost"`), and save the first checkpoint. Don't explain the commands unless asked.
+
+Explain: "Done. I'll remember this project next time you open a session here, and your save system is ready – type `/save` any time to save a checkpoint." If the save system was skipped, drop that part: "Done. I'll remember this project next time you open a session here."
 
 ## If CLAUDE.md already exists
 
