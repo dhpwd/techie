@@ -18,6 +18,8 @@ claude plugin marketplace add dhpwd/techie && claude plugin install techie@dhpwd
 
 Works in any terminal. On Mac, [Ghostty](https://ghostty.org) is free and looks great out of the box.
 
+New to the terminal? Start with the [step-by-step guide](https://danhopwood.com/posts/claude-code-for-founders-who-hate-the-terminal) instead – one command installs everything, including Claude Code itself.
+
 To uninstall: `claude plugin uninstall techie && claude plugin marketplace remove dhpwd-techie`
 
 ## What happens when you start
