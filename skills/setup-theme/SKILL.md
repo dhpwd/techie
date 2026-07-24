@@ -136,18 +136,18 @@ If they're still uncomfortable: even larger font (18-20 isn't unusual), swap lig
 
 ## Step 7: Configure environment settings (if not already done)
 
-Tell the user: "Let me check one more thing – there are some behind-the-scenes settings that make this work smoother for you. You'll see a permission prompt asking to read a file – choose Yes. Happy for me to go ahead?"
+Tell the user: "Let me check one more thing – there are some behind-the-scenes settings that make this work smoother for you. If a permission prompt appears asking to read a file, choose Yes. Happy for me to go ahead?"
 
 Wait for them to confirm before continuing. Then read `~/.claude/settings.json` and look for the `spinnerVerbs` key. If it exists, the installer already handled this – skip to the confirmation message below.
 
-If `spinnerVerbs` is **not** present, tell the user: "I'm going to configure a couple of things to make this work better for you. You'll see a permission prompt with some technical-looking changes – choose Yes."
+If `spinnerVerbs` is **not** present, tell the user: "I'm going to configure a couple of things to make this work better for you. If a permission prompt with some technical-looking changes appears, choose Yes."
 
 Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), merge:
 
 - **Stable updates** – `"autoUpdatesChannel": "stable"`
 - **Disable spinner tips** – `"spinnerTipsEnabled": false` (default tips are developer-oriented)
 - **Spinner verbs** – `"spinnerVerbs": {"mode": "replace", "verbs": ["Pondering", "Brewing", "Cooking up", "Noodling on", "Rustling up", "Spelunking", "Rummaging through", "Hatching", "Whipping up", "Tinkering with", "Percolating", "Marinating on", "Pivoting", "Disrupting", "Synergising with", "Leveraging", "Circling back to", "Aligning stakeholders on", "Moving the needle on", "Blue-skying", "Deep-diving into", "Taking offline", "Boiling the ocean", "Zooming out on", "Considering whether this scales", "Putting a pin in", "Parking", "Workshopping", "Running it up the flagpole"]}`
-- **Default mode** – `"permissions": {"defaultMode": "acceptEdits"}` – auto-approves file creation and editing so users aren't interrupted by permission prompts for every file
+- **Default mode** – `"permissions": {"defaultMode": "auto"}` – routine actions run without prompts and a background safety check reviews anything risky. If the account doesn't qualify for auto mode, Claude Code ignores the setting and the allow list below still covers the common prompts
 - **Permissions** – add to `permissions.allow` (don't replace existing entries):
   - `"Bash(git status *)"`, `"Bash(git diff *)"`, `"Bash(git log *)"` – viewing save state
   - `"Bash(git add *)"`, `"Bash(git commit *)"`, `"Bash(git init *)"` – saving checkpoints
@@ -161,6 +161,6 @@ Then, in **one edit** to `~/.claude/settings.json` (preserving existing keys), m
   - `"Read(.env)"`, `"Read(.env.*)"` – secrets
   - `"Read(~/.ssh/**)"`, `"Read(~/.aws/**)"` – credentials
 
-After the user approves (or if the installer already handled it): "Done. I've made the loading messages a bit more fun, set updates to a stable channel so nothing changes unexpectedly, and pre-approved the common actions so you won't get interrupted by permission prompts. These settings are saved permanently – type `/setup-theme` any time to adjust.
+After the user approves (or if the installer already handled it): "Done. I've made the loading messages a bit more fun, set updates to a stable channel so nothing changes unexpectedly, and set things up so routine actions run without interrupting you – anything unusual gets a background safety check first. These settings are saved permanently – type `/setup-theme` any time to adjust.
 
 To pick up the new settings, `/exit` then run `claude` to start a fresh session."

@@ -51,8 +51,8 @@ if [[ "$1" == "--uninstall" ]]; then
         # Remove Techie-managed top-level keys
         del(.autoUpdatesChannel, .spinnerTipsEnabled, .spinnerVerbs) |
 
-        # Remove defaultMode if Techie set it
-        if .permissions.defaultMode == "acceptEdits" then del(.permissions.defaultMode) else . end |
+        # Remove defaultMode if Techie set it ("acceptEdits" in older installs)
+        if .permissions.defaultMode == "auto" or .permissions.defaultMode == "acceptEdits" then del(.permissions.defaultMode) else . end |
 
         # Remove Techie-managed permission entries (keep user-added ones)
         if .permissions.allow then
@@ -108,7 +108,7 @@ techie_allow = {
 techie_deny = {"Read(.env)","Read(.env.*)","Read(~/.ssh/**)","Read(~/.aws/**)"}
 
 perms = s.get("permissions", {})
-if perms.get("defaultMode") == "acceptEdits":
+if perms.get("defaultMode") in ("auto", "acceptEdits"):
     del perms["defaultMode"]
 if "allow" in perms:
     perms["allow"] = [x for x in perms["allow"] if x not in techie_allow]
@@ -210,8 +210,12 @@ EOF
       --argjson pd "$permissions_deny" \
       --argjson sv "$spinner_verbs" \
       '
-      # acceptEdits avoids file-creation prompts that confuse non-technical users
-      .permissions.defaultMode = "acceptEdits" |
+      # auto mode: routine actions run without prompts, a background safety
+      # check reviews anything risky. Only honoured in user settings – if the
+      # account does not qualify (older model, org disabled) Claude Code
+      # ignores it and sessions start in manual mode, where the allow list
+      # below still covers the common prompts
+      .permissions.defaultMode = "auto" |
       .permissions.allow = ((.permissions.allow // []) + $pa | unique | sort) |
       .permissions.deny = ((.permissions.deny // []) + $pd | unique | sort) |
 
@@ -236,7 +240,7 @@ if os.path.exists(settings_path):
         settings = json.load(f)
 
 perms = settings.setdefault("permissions", {})
-perms["defaultMode"] = "acceptEdits"
+perms["defaultMode"] = "auto"
 existing_allow = perms.get("allow", [])
 existing_deny = perms.get("deny", [])
 perms["allow"] = sorted(set(existing_allow + pa))
