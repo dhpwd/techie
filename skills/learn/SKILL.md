@@ -1,6 +1,6 @@
 ---
 name: learn
-description: Learn a concept by doing, not by reading. Give me a topic and I'll create a small hands-on exercise you complete right here.
+description: Learn a concept by doing, not by reading – name a topic and get a small hands-on exercise you complete right here.
 argument-hint: "[topic] e.g. terminal basics, git, what is a branch"
 disable-model-invocation: true
 allowed-tools:

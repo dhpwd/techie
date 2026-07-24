@@ -1,6 +1,6 @@
 ---
 name: commands
-description: Quick reference of useful commands, categorised and practical.
+description: Get a quick reference of useful commands, categorised and practical.
 disable-model-invocation: true
 allowed-tools:
   - Read

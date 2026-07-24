@@ -1,6 +1,6 @@
 ---
 name: troubleshoot
-description: When something goes wrong, this diagnoses the problem and explains the fix in plain language.
+description: Diagnose what went wrong and explain the fix in plain language.
 disable-model-invocation: true
 allowed-tools:
   - Bash
